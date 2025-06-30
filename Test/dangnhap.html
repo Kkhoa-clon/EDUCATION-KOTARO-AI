@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập bằng Google</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        #user-info { display: none; margin-top: 20px; }
+    </style>
+</head>
+<body>
+<h1>Đăng nhập bằng Google</h1>
+
+<div id="g_id_onload"
+     data-client_id="465742141872-vh18i2rh8t8efo9ngvecrmoa2uqk0tu1.apps.googleusercontent.com"
+     data-context="signin"
+     data-ux_mode="popup"
+     data-callback="handleGoogleSignIn"
+     data-auto_prompt="false">
+</div>
+
+<div class="g_id_signin"
+     data-type="standard"
+     data-shape="rectangular"
+     data-theme="outline"
+     data-text="signin_with"
+     data-size="large">
+</div>
+
+<div id="user-info">
+    <h2>Xin chào, <span id="username"></span>!</h2>
+    <p>Email: <span id="user-email"></span></p>
+    <button onclick="logout()">Đăng xuất</button>
+</div>
+
+<script>
+    function handleGoogleSignIn(response) {
+        const userData = jwt_decode(response.credential);
+        console.log("User data:", userData);
+
+        localStorage.setItem("user", JSON.stringify({
+            name: userData.name,
+            email: userData.email,
+            picture: userData.picture
+        }));
+
+        document.getElementById("username").textContent = userData.name;
+        document.getElementById("user-email").textContent = userData.email;
+        document.getElementById("user-info").style.display = "block";
+    }
+
+    function logout() {
+        localStorage.removeItem("user");
+        window.location.reload();
+    }
+
+    window.onload = function() {
+        const savedUser = localStorage.getItem("user");
+        if (savedUser) {
+            const user = JSON.parse(savedUser);
+            document.getElementById("username").textContent = user.name;
+            document.getElementById("user-email").textContent = user.email;
+            document.getElementById("user-info").style.display = "block";
+        }
+    };
+</script>
+</body>
+</html>
