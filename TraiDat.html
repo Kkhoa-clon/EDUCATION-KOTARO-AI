@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Kotaro AI - Vũ Trụ</title>
+    <meta name="description" content="Kotaro AI giúp học sinh khám phá khoa học thông qua các công cụ AI và tương tác trực tuyến." />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="google-site-verification" content="GTAdd7e4F9ZHNyTFcWm-1K8Ia0Xo9pDLlq4DWLYGWYw" />  <!--the tim kiem len google -->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="icon" href="images/logo-Photoroom.png" type="image/x-jpg">
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body class="is-preload landing">
+<div id="page-wrapper">
+    <!-- Header -->
+    <header id="header">
+        <h1 id="logo"><a href="index.html">KOTARO AI</a></h1>
+        <nav id="nav">
+            <ul>
+                <li><a href="#">Tải Xuống</a></li>
+                <li><a href="#">Wikiperdia AI</a></li>
+                <li>
+                    <a href="#">Thư Viện</a>
+                    <ul>
+                        <li><a href="#">Nghiên Cứu</a></li>
+                        <li><a href="#">Ebook</a></li>
+                        <li>
+                            <a href="#">Ôn Luyện Học Sinh Giỏi</a>
+                            <ul>
+                                <li><a href="#">Vật Lý</a></li>
+                                <li><a href="#">Hóa Học</a></li>
+                                <li><a href="#">Sinh Học</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#">Trợ Lý Sen</a></li>
+                <li><a href="#">Máy Tính Khoa Học</a></li>
+                <li><a href="#">Thiên Văn AI</a></li>
+                <li>
+                    <a href="#">Vũ Trụ</a>
+                    <ul>
+                        <li><a href="HeMatTroi.html">Hệ Mặt Trời</a></li>
+                        <li><a href="TieuHanhTinh.html">Tiểu Hành Tinh</a></li>
+                        <li><a href="TraiDat.html">Trái Đất</a></li>
+                        <li><a href="HanhTinhKhac.html">Hành Tinh Ngoài Hệ Mặt Trời</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Tạo Câu Hỏi</a></li>
+                <li><a href="#">Trợ Lý Công Thức</a></li>
+                <li>
+                    <a href="#">Khoa Học Tự Nhiên</a>
+                    <ul>
+                        <li><a href="#">Vật Lý</a></li>
+                        <li><a href="#">Hóa Học</a></li>
+                        <li><a href="#">Sinh Học</a></li>
+                        <li>
+                            <a href="#">Mô Phỏng Thí Nghiệm 2D</a>
+                            <ul>
+                                <li><a href="#">Thí Nghiệm Vật Lý</a></li>
+                                <li><a href="#">Thí Nghiệm Hóa Học</a></li>
+                                <li><a href="#">Thí Nghiệm Sinh Học</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</div>
+<style>
+    /* Reset margin/padding để tránh khoảng trắng thừa */
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden; /* Ẩn thanh scroll */
+        font-family: Arial, sans-serif;
+    }
+
+    /* Container chiếm 100% viewport */
+    .nasa-iframe-container {
+        width: 100vw;   /* 100% chiều rộng viewport */
+        height: 100vh;  /* 100% chiều cao viewport */
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+
+    /* Iframe chiếm toàn bộ container */
+    #nasa-iframe {
+        width: 80%;
+        height: 80%;
+        border: none;   /* Bỏ viền iframe */
+    }
+
+    .nasa-iframe-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* hoặc chiều cao bạn muốn */
+    }
+
+    #nasa-iframe {
+        width: 80vw;
+        height: 80vh;
+        border: none;
+    }
+</style>
+<!-- Container chứa iframe -->
+<div class="nasa-iframe-container">
+    <iframe
+            id="nasa-iframe"
+            src="https://eyes.nasa.gov/apps/earth/#/"
+            allowfullscreen>
+    </iframe>
+</div>
+
+<script>
+    // Tự động resize khi màn hình thay đổi
+    window.addEventListener('resize', function() {
+        document.getElementById('nasa-iframe').style.height = window.innerHeight + 'px';
+    });
+</script>
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/logic_email.js"></script>
+</body>
+</html>
