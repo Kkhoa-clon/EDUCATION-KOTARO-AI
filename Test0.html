@@ -1,0 +1,221 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" class="dark">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Modern AI Chat</title>-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">-->
+<!--    <script>-->
+<!--        tailwind.config = {-->
+<!--            darkMode: 'class',-->
+<!--            theme: {-->
+<!--                extend: {-->
+<!--                    colors: {-->
+<!--                        primary: {-->
+<!--                            50: '#f2f9ed',-->
+<!--                            100: '#e1f2d6',-->
+<!--                            200: '#c4e5ad',-->
+<!--                            300: '#9fd67e',-->
+<!--                            400: '#73d239',-->
+<!--                            500: '#5cb82d',-->
+<!--                            600: '#479323',-->
+<!--                            700: '#38731e',-->
+<!--                            800: '#2e5b1c',-->
+<!--                            900: '#274c1a',-->
+<!--                            950: '#11290a'-->
+<!--                        }-->
+<!--                    }-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--    <style>-->
+<!--        .custom-scrollbar::-webkit-scrollbar {-->
+<!--            width: 6px;-->
+<!--        }-->
+<!--        .custom-scrollbar::-webkit-scrollbar-track {-->
+<!--            background: transparent;-->
+<!--        }-->
+<!--        .custom-scrollbar::-webkit-scrollbar-thumb {-->
+<!--            background-color: rgba(156, 163, 175, 0.5);-->
+<!--            border-radius: 3px;-->
+<!--        }-->
+<!--        .dark .custom-scrollbar::-webkit-scrollbar-thumb {-->
+<!--            background-color: rgba(75, 85, 99, 0.5);-->
+<!--        }-->
+
+<!--        .transition-all {-->
+<!--            transition: all 0.2s ease-in-out;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body class="bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200">-->
+<!--<header class="bg-white dark:bg-gray-900 shadow-sm py-4 px-6 flex items-center justify-between border-b border-gray-200 dark:border-gray-800 transition-colors duration-200">-->
+<!--    <div class="flex items-center space-x-3">-->
+<!--        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-sm transition-all hover:scale-105">-->
+<!--            <i class="fas fa-robot text-white text-base"></i>-->
+<!--        </div>-->
+<!--        <h1 class="text-2xl font-semibold">AI Assistant</h1>-->
+<!--    </div>-->
+<!--    <div class="flex items-center space-x-4">-->
+<!--        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-all" aria-label="Toggle theme">-->
+<!--            <i class="fas fa-moon dark:hidden text-primary-500"></i>-->
+<!--            <i class="fas fa-sun hidden dark:block text-primary-300"></i>-->
+<!--        </button>-->
+<!--        <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-all" aria-label="Settings">-->
+<!--            <i class="fas fa-cog text-primary-500 dark:text-primary-300 transition-transform hover:rotate-45"></i>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</header>-->
+
+<!--<main class="flex-1 flex flex-col max-w-4xl w-full mx-auto px-4 py-6">-->
+<!--    <div id="chat-container" class="flex-1 overflow-y-auto custom-scrollbar mb-4 space-y-4 p-2">-->
+<!--        <div class="flex items-start space-x-3">-->
+<!--            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shrink-0">-->
+<!--                <i class="fas fa-robot text-white text-base"></i>-->
+<!--            </div>-->
+<!--            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm max-w-[85%]">-->
+<!--                <p class="text-gray-700 dark:text-gray-300">Hello! I'm your AI assistant. How can I help you today?</p>-->
+<!--                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Today at <span id="current-time"></span></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-1 transition-colors duration-200">-->
+<!--        <form id="message-form" class="flex items-end space-x-2">-->
+<!--            <div class="flex-1">-->
+<!--                <textarea-->
+<!--                        id="message-input"-->
+<!--                        rows="1"-->
+<!--                        placeholder="Type your message..."-->
+<!--                        class="w-full px-4 py-3 bg-transparent focus:outline-none resize-none max-h-32 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition-colors duration-200"-->
+<!--                        required-->
+<!--                        aria-label="Type your message"-->
+<!--                ></textarea>-->
+<!--            </div>-->
+<!--            <button-->
+<!--                    type="submit"-->
+<!--                    class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-primary-600 text-white flex items-center justify-center hover:from-primary-600 hover:to-primary-700 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"-->
+<!--                    id="send-button"-->
+<!--                    aria-label="Send message"-->
+<!--            >-->
+<!--                <i class="fas fa-paper-plane"></i>-->
+<!--            </button>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</main>-->
+
+<!--<script>-->
+<!--    // Initialize theme based on localStorage or system preference-->
+<!--    const initTheme = () => {-->
+<!--        const savedTheme = localStorage.getItem('theme');-->
+<!--        if (savedTheme) {-->
+<!--            document.documentElement.classList.toggle('dark', savedTheme === 'dark');-->
+<!--        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {-->
+<!--            document.documentElement.classList.add('dark');-->
+<!--            localStorage.setItem('theme', 'dark');-->
+<!--        }-->
+<!--    };-->
+
+<!--    // Set current time in welcome message-->
+<!--    const setCurrentTime = () => {-->
+<!--        const now = new Date();-->
+<!--        const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });-->
+<!--        document.getElementById('current-time').textContent = timeString;-->
+<!--    };-->
+
+<!--    // Theme toggle-->
+<!--    const themeToggle = document.getElementById('theme-toggle');-->
+<!--    themeToggle.addEventListener('click', () => {-->
+<!--        document.documentElement.classList.toggle('dark');-->
+<!--        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');-->
+<!--    });-->
+
+<!--    // Auto-resize textarea-->
+<!--    const messageInput = document.getElementById('message-input');-->
+<!--    const autoResizeTextarea = () => {-->
+<!--        messageInput.style.height = 'auto';-->
+<!--        messageInput.style.height = `${Math.min(messageInput.scrollHeight, 128)}px`;-->
+<!--    };-->
+<!--    messageInput.addEventListener('input', autoResizeTextarea);-->
+
+<!--    // Chat functionality-->
+<!--    const chatContainer = document.getElementById('chat-container');-->
+<!--    const messageForm = document.getElementById('message-form');-->
+<!--    const sendButton = document.getElementById('send-button');-->
+
+<!--    // Sanitize HTML to prevent XSS-->
+<!--    const sanitizeHTML = (str) => {-->
+<!--        const div = document.createElement('div');-->
+<!--        div.textContent = str;-->
+<!--        return div.innerHTML;-->
+<!--    };-->
+
+<!--    // Format time as HH:MM-->
+<!--    const formatTime = (date) => {-->
+<!--        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });-->
+<!--    };-->
+
+<!--    // Add message to chat-->
+<!--    const addMessage = (content, isUser = false) => {-->
+<!--        const messageDiv = document.createElement('div');-->
+<!--        messageDiv.className = `flex items-start space-x-3 ${isUser ? 'justify-end' : ''}`;-->
+<!--        const time = formatTime(new Date());-->
+<!--        const sanitizedContent = sanitizeHTML(content);-->
+
+<!--        if (isUser) {-->
+<!--            messageDiv.innerHTML = `-->
+<!--                <div class="order-2">-->
+<!--                    <div class="bg-primary-500 text-white rounded-xl p-4 shadow-sm max-w-[85%]">-->
+<!--                        <p>${sanitizedContent}</p>-->
+<!--                        <p class="text-xs text-primary-200 mt-1">${time}</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center shrink-0 order-1">-->
+<!--                    <i class="fas fa-user text-gray-700 dark:text-gray-300 text-base"></i>-->
+<!--                </div>-->
+<!--            `;-->
+<!--        } else {-->
+<!--            messageDiv.innerHTML = `-->
+<!--                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shrink-0">-->
+<!--                    <i class="fas fa-robot text-white text-base"></i>-->
+<!--                </div>-->
+<!--                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm max-w-[85%]">-->
+<!--                    <p class="text-gray-700 dark:text-gray-300">${sanitizedContent}</p>-->
+<!--                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">${time}</p>-->
+<!--                </div>-->
+<!--            `;-->
+<!--        }-->
+
+<!--        chatContainer.appendChild(messageDiv);-->
+<!--        chatContainer.scrollTop = chatContainer.scrollHeight;-->
+<!--    };-->
+
+<!--    // Handle form submission-->
+<!--    messageForm.addEventListener('submit', (e) => {-->
+<!--        e.preventDefault();-->
+<!--        const message = messageInput.value.trim();-->
+<!--        if (!message) return;-->
+
+<!--        addMessage(message, true);-->
+<!--        messageInput.value = '';-->
+<!--        autoResizeTextarea();-->
+<!--        messageInput.focus();-->
+<!--    });-->
+
+<!--    // Handle Enter and Shift+Enter-->
+<!--    messageInput.addEventListener('keydown', (e) => {-->
+<!--        if (e.key === 'Enter' && !e.shiftKey) {-->
+<!--            e.preventDefault();-->
+<!--            messageForm.dispatchEvent(new Event('submit'));-->
+<!--        }-->
+<!--    });-->
+
+<!--    // Initialize-->
+<!--    initTheme();-->
+<!--    setCurrentTime();-->
+<!--    autoResizeTextarea();-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
