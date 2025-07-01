@@ -1,5 +1,5 @@
 
-    /* Google Fonts - Inter */
+/* Google Fonts - Inter */
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
 
 * {
@@ -416,7 +416,46 @@ body.show-emoji-picker em-emoji-picker {
 }
 
 /* Responsive media query for mobile screens */
-@media (max-width: 900px) {
+@media (max-width: 768px) {
+    :root {
+        --mobile-padding: 15px;
+    }
+
+    body {
+        background-attachment: scroll;
+        background-size: auto 100vh;
+    }
+
+    .chatbot-popup {
+        border-radius: 0;
+        max-width: 100vw;
+        max-height: 100vh;
+        height: 100%;
+    }
+
+    .chat-header {
+        padding: 12px var(--mobile-padding);
+    }
+
+    .chat-body {
+        padding: 15px var(--mobile-padding);
+        margin-bottom: 70px;
+        height: calc(100vh - 120px);
+    }
+
+    .chat-footer {
+        padding: 10px var(--mobile-padding) 15px;
+    }
+
+    .message-text {
+        max-width: 85% !important;
+    }
+
+    #chatbot-toggler {
+        right: 20px;
+        bottom: 20px;
+        left: auto;
+    }
     #chatbot-toggler {
         left: auto;
         right: 20px;
@@ -467,66 +506,76 @@ body::before {
     z-index: -1;
 }
 
-    /* ====== CHAT HEADER ====== */
-    .chatbot-logo {
-        width: 36px;
-        height: 36px;
-        object-fit: cover;
-        border-radius: 50%;
-        background: var(--white);
-        padding: 4px;
-        flex-shrink: 0;
-        border: 2px solid var(--white);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+/* ====== CHAT HEADER ====== */
+.chatbot-logo {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+    background: var(--white);
+    padding: 4px;
+    flex-shrink: 0;
+    border: 2px solid var(--white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-    /* ====== CHAT BODY ====== */
-    .bot-avatar {
-        width: 36px;
-        height: 36px;
-        object-fit: cover;
-        border-radius: 50%;
-        flex-shrink: 0;
-        background: var(--primary-color);
-        margin-top: 4px;
-        border: 2px solid var(--white);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+/* ====== CHAT BODY ====== */
+.bot-avatar {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--primary-color);
+    margin-top: 4px;
+    border: 2px solid var(--white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-    /* ====== CHATBOT POPUP ====== */
+/* ====== CHATBOT POPUP ====== */
+.chatbot-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.2);
+    width: 1000px;
+    height: 700px;
+    max-width: 90vw;
+    max-height: 80vh;
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+    0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.show-chatbot .chatbot-popup {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ====== RESPONSIVE DESIGN ====== */
+@media (max-width: 480px) {
     .chatbot-popup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.2);
-        width: 1000px;
-        height: 700px;
-        max-width: 90vw;
-        max-height: 80vh;
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 16px;
-        opacity: 0;
-        pointer-events: none;
-        z-index: 9999;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
-        0 5px 15px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        display: flex;
-        flex-direction: column;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        width: 95vw;
+        height: 80vh;
     }
+}
 
-    body.show-chatbot .chatbot-popup {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translate(-50%, -50%) scale(1);
-    }
+/* Đảm bảo SweetAlert hiển thị trên tất cả các phần tử khác */
+.high-z-index-swal {
+    z-index: 999999 !important;
+}
 
-    /* ====== RESPONSIVE DESIGN ====== */
-    @media (max-width: 480px) {
-        .chatbot-popup {
-            width: 95vw;
-            height: 80vh;
-        }
-    }
+/* Nếu cần thiết, thêm style cho backdrop */
+.swal2-container {
+    z-index: 999999 !important;
+}
