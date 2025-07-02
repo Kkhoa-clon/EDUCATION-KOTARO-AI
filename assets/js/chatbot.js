@@ -252,9 +252,7 @@ function resetFileInput() {
     fileUploadWrapper.querySelector("img").src = "#";
     userData.file = { data: null, mime_type: null };
     document.querySelector(".chat-form").reset();
-}
-
-// Gán sự kiện cho các nút
+}// Gán sự kiện cho các nút
 sendMessageButton.addEventListener("click", (e) => handleOutgoingMessage(e));
 document.querySelector("#file-upload").addEventListener("click", (e) => fileInput.click());
 chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
@@ -280,3 +278,4 @@ function updateChatbotImages(logoUrl, avatarUrl) {
         };
     }
 }
+
