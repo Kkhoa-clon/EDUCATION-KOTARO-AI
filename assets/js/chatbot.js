@@ -35,6 +35,38 @@ const createMessageElement = (content, ...classes) => {
     return div; // Trả về phần tử đã tạo
 };
 
+// Hàm render markdown an toàn và highlight code, hỗ trợ bảng, danh sách, JSON, công thức, HTML
+function renderBotOutput(rawText) {
+    // Kiểm tra nếu là JSON
+    try {
+        const jsonObj = JSON.parse(rawText);
+        return `<pre><code class="json">${JSON.stringify(jsonObj, null, 2)}</code></pre>`;
+    } catch (e) {}
+    // Nếu không phải JSON, render markdown (có hỗ trợ bảng, danh sách, code, công thức)
+    const html = marked.parse(rawText, {
+        breaks: true,
+        gfm: true,
+        headerIds: false,
+        mangle: false,
+        sanitize: false // Để tự xử lý XSS phía dưới
+    });
+    // Tạo thẻ div tạm để loại bỏ script nguy hiểm
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    // Loại bỏ script/style tag
+    tempDiv.querySelectorAll('script, style').forEach(el => el.remove());
+    // Highlight code block
+    if (window.hljs) {
+        tempDiv.querySelectorAll('pre code').forEach(block => {
+            window.hljs.highlightElement(block);
+        });
+    }
+    // Thêm class cho bảng và danh sách để CSS đẹp hơn
+    tempDiv.querySelectorAll('table').forEach(tbl => tbl.classList.add('chatbot-table'));
+    tempDiv.querySelectorAll('ul,ol').forEach(list => list.classList.add('chatbot-list'));
+    return tempDiv.innerHTML;
+}
+
 // Hàm tạo phản hồi từ bot qua API
 const generateBotResponse = async (incomingMessageDiv) => {
     const messageElement = incomingMessageDiv.querySelector(".message-text"); // Lấy phần hiển thị nội dung
@@ -58,11 +90,15 @@ const generateBotResponse = async (incomingMessageDiv) => {
         // Gọi API để lấy phản hồi từ bot
         const response = await fetch(API_URL, requestOptions);
         const data = await response.json();
-        if (!response.ok) throw new Error(data.error.message);
+        if (!response.ok) throw new Error(data.error?.message || 'Lỗi không xác định từ API');
 
         // Xử lý và hiển thị phản hồi từ bot
-        const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
-        messageElement.innerText = apiResponseText;
+        const apiResponseText = data.candidates[0].content.parts[0].text.trim();
+        messageElement.innerHTML = renderBotOutput(apiResponseText);
+        // Gọi MathJax để render công thức toán học nếu có
+        if (window.MathJax) {
+            MathJax.typesetPromise([messageElement]);
+        }
         // Lưu phản hồi vào lịch sử chat
         chatHistory.push({
             role: "model",
@@ -70,13 +106,12 @@ const generateBotResponse = async (incomingMessageDiv) => {
         });
     } catch (error) {
         // Xử lý lỗi nếu có
-        messageElement.innerText = error.message;
-        messageElement.style.color = "#ff0000";
+        handleApiError(messageElement, error);
     } finally {
         // Dọn dẹp sau khi xử lý xong
         userData.file = {};
         incomingMessageDiv.classList.remove("thinking");
-        chatBody.scrollTo({ behavior: "smooth", top: chatBody.scrollHeight });
+        scrollToBottom();
     }
 };
 
@@ -85,6 +120,7 @@ const handleOutgoingMessage = (e) => {
     e.preventDefault();
     // Lấy nội dung tin nhắn và xóa ô nhập
     userData.message = messageInput.value.trim();
+    if (!userData.message) return;
     messageInput.value = "";
     fileUploadWrapper.classList.remove("file-uploaded");
     messageInput.dispatchEvent(new Event("input"));
@@ -116,7 +152,7 @@ const handleOutgoingMessage = (e) => {
 
         const incomingMessageDiv = createMessageElement(messageContent, "bot-message", "thinking");
         chatBody.appendChild(incomingMessageDiv);
-        chatBody.scrollTo({ behavior: "smooth", top: chatBody.scrollHeight });
+        scrollToBottom();
 
         // Xử lý nếu không tải được avatar
         const avatarImg = incomingMessageDiv.querySelector('.bot-avatar');
@@ -156,59 +192,6 @@ messageInput.addEventListener("input", (e) => {
 });
 
 // Xử lý khi người dùng chọn file
-fileInput.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        // Hiển thị preview file
-        fileUploadWrapper.querySelector("img").src = e.target.result;
-        fileUploadWrapper.classList.add("file-uploaded");
-        const base64String = e.target.result.split(",")[1];
-
-        // Lưu dữ liệu file vào userData
-        userData.file = {
-            data: base64String,
-            mime_type: file.type
-        };
-
-        fileInput.value = "";
-    };
-
-    reader.readAsDataURL(file);
-});
-
-// Xử lý khi nhấn nút hủy file
-fileCancelButton.addEventListener("click", (e) => {
-    userData.file = {};
-    fileUploadWrapper.classList.remove("file-uploaded");
-});
-
-// Khởi tạo emoji picker
-const picker = new EmojiMart.Picker({
-    theme: "light",
-    showSkinTones: "none",
-    previewPosition: "none",
-    onEmojiSelect: (emoji) => {
-        // Chèn emoji vào vị trí con trỏ trong ô nhập
-        const { selectionStart: start, selectionEnd: end } = messageInput;
-        messageInput.setRangeText(emoji.native, start, end, "end");
-        messageInput.focus();
-    },
-    onClickOutside: (e) => {
-        // Đóng emoji picker khi click ra ngoài
-        if (e.target.id === "emoji-picker") {
-            document.body.classList.toggle("show-emoji-picker");
-        } else {
-            document.body.classList.remove("show-emoji-picker");
-        }
-    },
-});
-
-// Thêm emoji picker vào form chat
-document.querySelector(".chat-form").appendChild(picker);
-
-// Xử lý khi chọn file (kiểm tra loại file)
 fileInput.addEventListener("change", async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -245,14 +228,37 @@ fileInput.addEventListener("change", async (e) => {
     reader.readAsDataURL(file);
 });
 
-// Hàm reset file input
-function resetFileInput() {
-    fileInput.value = "";
+// Xử lý khi nhấn nút hủy file
+fileCancelButton.addEventListener("click", (e) => {
+    userData.file = {};
     fileUploadWrapper.classList.remove("file-uploaded");
-    fileUploadWrapper.querySelector("img").src = "#";
-    userData.file = { data: null, mime_type: null };
-    document.querySelector(".chat-form").reset();
-}// Gán sự kiện cho các nút
+});
+
+// Khởi tạo emoji picker
+const picker = new EmojiMart.Picker({
+    theme: "light",
+    showSkinTones: "none",
+    previewPosition: "none",
+    onEmojiSelect: (emoji) => {
+        // Chèn emoji vào vị trí con trỏ trong ô nhập
+        const { selectionStart: start, selectionEnd: end } = messageInput;
+        messageInput.setRangeText(emoji.native, start, end, "end");
+        messageInput.focus();
+    },
+    onClickOutside: (e) => {
+        // Đóng emoji picker khi click ra ngoài
+        if (e.target.id === "emoji-picker") {
+            document.body.classList.toggle("show-emoji-picker");
+        } else {
+            document.body.classList.remove("show-emoji-picker");
+        }
+    },
+});
+
+// Thêm emoji picker vào form chat
+document.querySelector(".chat-form").appendChild(picker);
+
+// Gán sự kiện cho các nút
 sendMessageButton.addEventListener("click", (e) => handleOutgoingMessage(e));
 document.querySelector("#file-upload").addEventListener("click", (e) => fileInput.click());
 chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
@@ -277,5 +283,39 @@ function updateChatbotImages(logoUrl, avatarUrl) {
             avatar.src = 'https://i.pinimg.com/736x/1b/9d/20/1b9d203c25c64fac1117c96309808415.jpg';
         };
     }
+}
+
+// Sự kiện mở/đóng extra-popup
+const extraHeaderBtn = document.getElementById('extra-header-btn');
+const closeExtraPopup = document.getElementById('close-extra-popup');
+
+extraHeaderBtn.addEventListener('click', () => {
+    document.body.classList.toggle('show-extra-popup');
+});
+closeExtraPopup.addEventListener('click', () => {
+    document.body.classList.remove('show-extra-popup');
+});
+
+// ========== ERROR HANDLING ========== //
+function handleApiError(messageElement, error) {
+    let msg = error.message || error.toString();
+    if (msg.includes('overloaded')) {
+        msg = 'Hệ thống AI đang quá tải. Vui lòng thử lại sau vài phút!';
+    }
+    messageElement.innerHTML = `<span style="color:#ff0000">${msg}</span>`;
+}
+
+// ========== UI & RENDER ========== //
+function scrollToBottom() {
+    chatBody.scrollTo({ behavior: "smooth", top: chatBody.scrollHeight });
+}
+function resetFileInput() {
+    fileInput.value = "";
+    fileUploadWrapper.classList.remove("file-uploaded");
+    const img = fileUploadWrapper.querySelector("img");
+    if (img) img.src = "#";
+    userData.file = { data: null, mime_type: null };
+    const form = document.querySelector(".chat-form");
+    if (form) form.reset();
 }
 
