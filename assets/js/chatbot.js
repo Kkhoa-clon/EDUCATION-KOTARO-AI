@@ -12,6 +12,9 @@ const closeChatbot = document.querySelector("#close-chatbot"); // Nút đóng ch
 const API_KEY = "AIzaSyBninbq7h5tAnlzcHLQ8UYryQ-2AAXJTl8"; // API key để kết nối với Gemini
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`; // URL endpoint API
 
+// API 1 : AIzaSyBninbq7h5tAnlzcHLQ8UYryQ-2AAXJTl8
+// API 2 : AIzaSyBHLOFCb_BE-iRtcUr8-Y9wHGBMVJxr3wo
+
 // Đối tượng lưu dữ liệu người dùng
 const userData = {
     message: null, // Tin nhắn người dùng
@@ -318,4 +321,3 @@ function resetFileInput() {
     const form = document.querySelector(".chat-form");
     if (form) form.reset();
 }
-

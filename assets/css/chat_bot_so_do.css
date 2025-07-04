@@ -1,0 +1,171 @@
+/* CSS cho tính năng tạo sơ đồ */
+.so-do-container {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    margin: 10px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.so-do-button {
+    background: linear-gradient(135deg, #73d239, #5bbf2a);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(115, 210, 57, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.so-do-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(115, 210, 57, 0.4);
+    background: linear-gradient(135deg, #5bbf2a, #4a9e22);
+}
+
+.so-do-button:active {
+    transform: translateY(0);
+}
+
+.so-do-button .material-symbols-rounded {
+    font-size: 18px;
+}
+
+.so-do-button.loading {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.so-do-button.loading .material-symbols-rounded {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.so-do-result {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #73d239;
+}
+
+.so-do-result h4 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+
+.so-do-preview {
+    margin-top: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.so-do-preview svg {
+    max-width: 100%;
+    max-height: 300px;
+    height: auto;
+}
+
+.so-do-preview.loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.so-do-error {
+    background: #fed7d7;
+    color: #c53030;
+    padding: 12px;
+    border-radius: 6px;
+    border-left: 4px solid #e53e3e;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.so-do-success {
+    background: #c6f6d5;
+    color: #2f855a;
+    padding: 12px;
+    border-radius: 6px;
+    border-left: 4px solid #38a169;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .so-do-container {
+        padding: 15px;
+        margin: 5px 0;
+    }
+    
+    .so-do-button {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+    
+
+    
+
+}
+
+/* Mermaid diagram styling */
+.mermaid {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.mermaid svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Loading spinner for diagram generation */
+.so-do-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #666;
+}
+
+.so-do-loading .spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #73d239;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+} 
