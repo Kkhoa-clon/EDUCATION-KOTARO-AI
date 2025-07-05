@@ -43,32 +43,171 @@ function renderBotOutput(rawText) {
     // Kiểm tra nếu là JSON
     try {
         const jsonObj = JSON.parse(rawText);
-        return `<pre><code class="json">${JSON.stringify(jsonObj, null, 2)}</code></pre>`;
+        return `<pre class="json-block"><code class="json">${JSON.stringify(jsonObj, null, 2)}</code></pre>`;
     } catch (e) {}
-    // Nếu không phải JSON, render markdown (có hỗ trợ bảng, danh sách, code, công thức)
-    const html = marked.parse(rawText, {
+    
+    // Xử lý công thức toán học trước khi parse markdown
+    let processedText = rawText;
+    const mathFormulas = [];
+    let formulaIndex = 0;
+    
+    // Bảo vệ công thức toán học khỏi markdown parser
+    const mathRegex = /(\$\$.*?\$\$|\$.*?\$|\\\[.*?\\\]|\\\(.*?\\\))/g;
+    processedText = processedText.replace(mathRegex, (match) => {
+        const key = `__MATH_${formulaIndex}__`;
+        mathFormulas[formulaIndex] = match;
+        formulaIndex++;
+        return key;
+    });
+    
+    // Render markdown với text đã được bảo vệ
+    const html = marked.parse(processedText, {
         breaks: true,
         gfm: true,
         headerIds: false,
         mangle: false,
-        sanitize: false // Để tự xử lý XSS phía dưới
+        sanitize: false
     });
-    // Tạo thẻ div tạm để loại bỏ script nguy hiểm
+    
+    // Tạo thẻ div tạm để xử lý
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
-    // Loại bỏ script/style tag
-    tempDiv.querySelectorAll('script, style').forEach(el => el.remove());
-    // Highlight code block
+    
+    // Sanitize HTML - loại bỏ các tag nguy hiểm
+    tempDiv.querySelectorAll('script, style, iframe, object, embed, form, input, button, select, textarea').forEach(el => el.remove());
+    
+    // Khôi phục công thức toán học
+    let finalHtml = tempDiv.innerHTML;
+    mathFormulas.forEach((formula, index) => {
+        const key = `__MATH_${index}__`;
+        finalHtml = finalHtml.replace(key, formula);
+    });
+    
+    // Tạo element tạm để xử lý styling
+    const finalDiv = document.createElement('div');
+    finalDiv.innerHTML = finalHtml;
+    
+    // Highlight code blocks với syntax highlighting
     if (window.hljs) {
-        tempDiv.querySelectorAll('pre code').forEach(block => {
+        finalDiv.querySelectorAll('pre code').forEach(block => {
+            // Thêm class cho code block
+            block.parentElement.classList.add('code-block');
             window.hljs.highlightElement(block);
         });
     }
-    // Thêm class cho bảng và danh sách để CSS đẹp hơn
-    tempDiv.querySelectorAll('table').forEach(tbl => tbl.classList.add('chatbot-table'));
-    tempDiv.querySelectorAll('ul,ol').forEach(list => list.classList.add('chatbot-list'));
-    return tempDiv.innerHTML;
+    
+    // Xử lý inline code
+    finalDiv.querySelectorAll('code:not(pre code)').forEach(inlineCode => {
+        inlineCode.classList.add('inline-code');
+    });
+    
+    // Xử lý bảng với responsive design
+    finalDiv.querySelectorAll('table').forEach(tbl => {
+        tbl.classList.add('chatbot-table');
+        
+        // Thêm wrapper cho bảng để scroll ngang
+        if (!tbl.parentElement.classList.contains('table-wrapper')) {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('table-wrapper');
+            tbl.parentNode.insertBefore(wrapper, tbl);
+            wrapper.appendChild(tbl);
+        }
+        
+        // Thêm class cho header và body
+        const thead = tbl.querySelector('thead');
+        const tbody = tbl.querySelector('tbody');
+        if (thead) thead.classList.add('table-header');
+        if (tbody) tbody.classList.add('table-body');
+        
+        // Thêm class cho các cell
+        tbl.querySelectorAll('th').forEach(th => th.classList.add('table-header-cell'));
+        tbl.querySelectorAll('td').forEach(td => td.classList.add('table-cell'));
+    });
+    
+    // Xử lý danh sách
+    finalDiv.querySelectorAll('ul').forEach(ul => {
+        ul.classList.add('chatbot-list', 'unordered-list');
+        ul.querySelectorAll('li').forEach(li => li.classList.add('list-item'));
+    });
+    
+    finalDiv.querySelectorAll('ol').forEach(ol => {
+        ol.classList.add('chatbot-list', 'ordered-list');
+        ol.querySelectorAll('li').forEach(li => li.classList.add('list-item'));
+    });
+    
+    // Xử lý blockquote
+    finalDiv.querySelectorAll('blockquote').forEach(quote => {
+        quote.classList.add('chatbot-quote');
+        // Thêm icon quote nếu chưa có
+        if (!quote.querySelector('.quote-icon')) {
+            const icon = document.createElement('div');
+            icon.className = 'quote-icon';
+            icon.innerHTML = '❝';
+            quote.insertBefore(icon, quote.firstChild);
+        }
+    });
+    
+    // Xử lý headings với hierarchy
+    finalDiv.querySelectorAll('h1').forEach(h => h.classList.add('chatbot-heading', 'heading-1'));
+    finalDiv.querySelectorAll('h2').forEach(h => h.classList.add('chatbot-heading', 'heading-2'));
+    finalDiv.querySelectorAll('h3').forEach(h => h.classList.add('chatbot-heading', 'heading-3'));
+    finalDiv.querySelectorAll('h4').forEach(h => h.classList.add('chatbot-heading', 'heading-4'));
+    finalDiv.querySelectorAll('h5').forEach(h => h.classList.add('chatbot-heading', 'heading-5'));
+    finalDiv.querySelectorAll('h6').forEach(h => h.classList.add('chatbot-heading', 'heading-6'));
+    
+    // Xử lý paragraphs
+    finalDiv.querySelectorAll('p').forEach(p => p.classList.add('chatbot-paragraph'));
+    
+    // Xử lý links
+    finalDiv.querySelectorAll('a').forEach(link => {
+        link.classList.add('chatbot-link');
+        // Thêm target="_blank" cho external links
+        if (link.href && !link.href.startsWith('#')) {
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+        }
+    });
+    
+    // Xử lý strong và em
+    finalDiv.querySelectorAll('strong, b').forEach(el => el.classList.add('chatbot-bold'));
+    finalDiv.querySelectorAll('em, i').forEach(el => el.classList.add('chatbot-italic'));
+    
+    // Xử lý horizontal rules
+    finalDiv.querySelectorAll('hr').forEach(hr => hr.classList.add('chatbot-divider'));
+    
+    return finalDiv.innerHTML;
 }
+
+// Hàm kiểm tra và xử lý lệnh /taosodo
+const checkAndHandleSoDoCommand = (message) => {
+    const trimmedMessage = message.trim();
+    if (trimmedMessage.toLowerCase().startsWith('/taosodo')) {
+        // Lấy nội dung sau /taosodo
+        const soDoContent = trimmedMessage.substring('/taosodo'.length).trim();
+        
+        if (soDoContent) {
+            // Mở extra-popup
+            document.body.classList.add('show-extra-popup');
+            
+            // Đặt nội dung vào message-input trong extra-popup
+            const extraMessageInput = document.querySelector('.message-input');
+            if (extraMessageInput) {
+                extraMessageInput.value = soDoContent;
+            }
+            
+            // Tự động tạo sơ đồ sau 1 giây
+            setTimeout(() => {
+                const taoSoDoBtn = document.getElementById('tao-so-do-btn');
+                if (taoSoDoBtn && window.soDoGenerator) {
+                    taoSoDoBtn.click();
+                }
+            }, 1000);
+            
+            return true; // Đã xử lý lệnh
+        }
+    }
+    return false; // Không phải lệnh /taosodo
+};
 
 // Hàm tạo phản hồi từ bot qua API
 const generateBotResponse = async (incomingMessageDiv) => {
@@ -136,6 +275,40 @@ const handleOutgoingMessage = (e) => {
     outgoingMessageDiv.querySelector(".message-text").innerText = userData.message;
     chatBody.appendChild(outgoingMessageDiv);
     chatBody.scrollTop = chatBody.scrollHeight;
+
+    // Kiểm tra xem có phải lệnh /taosodo không
+    if (checkAndHandleSoDoCommand(userData.message)) {
+        // Nếu là lệnh /taosodo, vẫn gọi API nhưng thêm thông báo
+        setTimeout(() => {
+            // Lấy avatar từ localStorage hoặc dùng mặc định
+            const botAvatarUrl = localStorage.getItem('botAvatarUrl') || 'https://i.pinimg.com/736x/1b/9d/20/1b9d203c25c64fac1117c96309808415.jpg';
+
+            // Tạo nội dung tin nhắn "đang suy nghĩ"
+            const messageContent = `
+                <img class="bot-avatar" src="${botAvatarUrl}" alt="Bot Avatar">
+                <div class="message-text">
+                    <div class="thinking-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>`;
+
+            const incomingMessageDiv = createMessageElement(messageContent, "bot-message", "thinking");
+            chatBody.appendChild(incomingMessageDiv);
+            scrollToBottom();
+
+            // Xử lý nếu không tải được avatar
+            const avatarImg = incomingMessageDiv.querySelector('.bot-avatar');
+            avatarImg.onerror = function() {
+                this.src = 'https://i.pinimg.com/736x/1b/9d/20/1b9d203c25c64fac1117c96309808415.jpg';
+            };
+
+            // Gọi API để lấy phản hồi từ bot
+            generateBotResponse(incomingMessageDiv);
+        }, 600);
+        return;
+    }
 
     // Hiển thị trạng thái "bot đang suy nghĩ" sau 0.6s
     setTimeout(() => {

@@ -38,7 +38,26 @@
         <div class="message bot-message">
             <!-- Thay thế SVG bằng thẻ img để sử dụng link ảnh -->
             <img class="bot-avatar" src="https://i.pinimg.com/736x/1b/9d/20/1b9d203c25c64fac1117c96309808415.jpg" alt="Bot Avatar">
-            <div class="message-text">Xin chào 👋<br />Mình là Bé Sen đến từ Đồng Tháp<br>
+            <div class="message-text">
+                <div class="welcome-message" style="color: #333;">
+                    <h3 style="color: #73d239; margin-bottom: 12px; font-size: 1.4rem;">Xin chào 👋</h3>
+                    <p style="color: #73d239; font-weight: 600; margin-bottom: 16px; font-size: 1.1rem;">Mình là Bé Sen đến từ Đồng Tháp</p>
+                    
+                    <div class="feature-list" style="background: rgba(115, 210, 57, 0.1); padding: 12px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #73d239;">
+                        <p style="margin: 0; line-height: 1.6;">Mình có thể trả lời tất cả các thắc mắc của bạn về <strong style="color: #73d239;">Khoa Học Tự Nhiên</strong> và giải thích mô tả các bài tập khó trong quá trình học tập, giáo dục và nghiên cứu của bạn!</p>
+                    </div>
+                    
+                    <div class="command-section" style="margin-top: 20px;">
+                        <p style="color: #73d239; font-weight: 600; margin-bottom: 8px;">Nếu muốn tạo sơ đồ khối cho vấn đề của bạn hãy dùng:</p>
+                        <div class="command-example" style="background: #73d239; color: white; padding: 8px 12px; border-radius: 6px; margin: 8px 0; display: inline-block; font-family: monospace; font-weight: 600;">
+                            /taosodo
+                        </div>
+                        <p style="color: #73d239; font-weight: 600; margin: 16px 0 8px 0;">Ví dụ:</p>
+                        <div class="command-example" style="background: rgba(115, 210, 57, 0.15); border: 1px solid #73d239; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 0.9rem; line-height: 1.4;">
+                            /taosodo Tìm hiểu về các bài tập hóa hữu cơ lớp 10
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -76,7 +95,7 @@
                 Nhập mô tả thuật toán hoặc quy trình có ngay sơ đồ khối cho bạn!
             </p>
             <div style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 12px; margin-bottom: 20px; font-size: 12px; color: #155724;">
-                <strong>✅ Sẵn sàng:</strong> Tính năng AI đã được cấu hình và sẵn sàng tạo sơ đồ.
+                <strong>Tính năng đã sẵn sàng tạo sơ đồ</strong>
             </div>
             
             <button id="tao-so-do-btn" class="so-do-button">

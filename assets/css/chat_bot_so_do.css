@@ -1,12 +1,14 @@
-/* CSS cho tính năng tạo sơ đồ */
+/* CSS cho tính năng tạo sơ đồ - Enhanced Version */
 .so-do-container {
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
-    margin: 10px 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-height: 500px;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+    border-radius: 16px;
+    margin: 15px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(115, 210, 57, 0.1);
+    max-height: 600px;
     overflow-y: auto;
+    border: 1px solid rgba(115, 210, 57, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .so-do-button {
@@ -56,40 +58,101 @@
 }
 
 .so-do-result {
-    margin-top: 20px;
-    padding: 15px;
-    background: #f8f9fa;
-    border-radius: 8px;
+    margin-top: 24px;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-radius: 12px;
     border-left: 4px solid #73d239;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(115, 210, 57, 0.15);
 }
 
-.so-do-result h4 {
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 16px;
+.so-do-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(115, 210, 57, 0.1);
+}
+
+.so-do-header h4 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 18px;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.so-do-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.so-do-action-btn {
+    background: rgba(115, 210, 57, 0.1);
+    border: 1px solid rgba(115, 210, 57, 0.2);
+    color: #73d239;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.so-do-action-btn:hover {
+    background: rgba(115, 210, 57, 0.15);
+    border-color: rgba(115, 210, 57, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(115, 210, 57, 0.2);
+}
+
+.so-do-action-btn .material-symbols-rounded {
+    font-size: 16px;
 }
 
 
 
 .so-do-preview {
-    margin-top: 15px;
-    padding: 15px;
-    background: white;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    min-height: 200px;
+    margin-top: 16px;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffffff, #fafbfc);
+    border-radius: 12px;
+    border: 2px solid rgba(115, 210, 57, 0.1);
+    min-height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+    position: relative;
+}
+
+.so-do-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #73d239, #5bbf2a);
+    border-radius: 12px 12px 0 0;
 }
 
 .so-do-preview svg {
     max-width: 100%;
-    max-height: 300px;
+    max-height: 350px;
     height: auto;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
 }
+
+
 
 .so-do-preview.loading {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
@@ -102,7 +165,8 @@
     100% { background-position: -200% 0; }
 }
 
-.so-do-error {
+/* Legacy styles - kept for compatibility */
+.so-do-error.legacy {
     background: #fed7d7;
     color: #c53030;
     padding: 12px;
@@ -112,7 +176,7 @@
     font-size: 14px;
 }
 
-.so-do-success {
+.so-do-success.legacy {
     background: #c6f6d5;
     color: #2f855a;
     padding: 12px;
@@ -124,11 +188,190 @@
 
 
 
+/* Modal Styles */
+.so-do-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    backdrop-filter: blur(5px);
+    animation: modalFadeIn 0.3s ease;
+}
+
+.so-do-modal-content {
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-radius: 16px;
+    max-width: 90vw;
+    max-height: 90vh;
+    width: 800px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(115, 210, 57, 0.2);
+    overflow: hidden;
+    animation: modalSlideIn 0.3s ease;
+}
+
+.so-do-modal-header {
+    background: linear-gradient(135deg, #73d239, #5bbf2a);
+    color: white;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.so-do-modal-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.so-do-modal-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.so-do-modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.so-do-modal-body {
+    padding: 24px;
+    max-height: calc(90vh - 120px);
+    overflow-y: auto;
+}
+
+.so-do-modal-preview {
+    background: linear-gradient(135deg, #ffffff, #fafbfc);
+    border: 2px solid rgba(115, 210, 57, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.so-do-modal-preview svg {
+    max-width: 100%;
+    max-height: 500px;
+    height: auto;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.15));
+}
+
+.so-do-modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.so-do-modal-btn {
+    background: linear-gradient(135deg, #73d239, #5bbf2a);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(115, 210, 57, 0.3);
+}
+
+.so-do-modal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(115, 210, 57, 0.4);
+    background: linear-gradient(135deg, #5bbf2a, #4a9e22);
+}
+
+.so-do-modal-btn .material-symbols-rounded {
+    font-size: 18px;
+}
+
+/* Animations */
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+    from { 
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Enhanced Success/Error Messages */
+.so-do-success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: #155724;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border-left: 4px solid #28a745;
+    margin: 16px 0;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.1);
+    animation: slideInDown 0.3s ease;
+}
+
+.so-do-error {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    color: #721c24;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border-left: 4px solid #dc3545;
+    margin: 16px 0;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.1);
+    animation: slideInDown 0.3s ease;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .so-do-container {
-        padding: 15px;
-        margin: 5px 0;
+        padding: 16px;
+        margin: 8px 0;
     }
     
     .so-do-button {
@@ -136,9 +379,52 @@
         font-size: 13px;
     }
     
-
+    .so-do-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
     
-
+    .so-do-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .so-do-action-btn {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .so-do-modal-content {
+        width: 95vw;
+        max-height: 95vh;
+    }
+    
+    .so-do-modal-header {
+        padding: 16px 20px;
+    }
+    
+    .so-do-modal-header h3 {
+        font-size: 18px;
+    }
+    
+    .so-do-modal-body {
+        padding: 16px;
+    }
+    
+    .so-do-modal-preview {
+        padding: 16px;
+        min-height: 300px;
+    }
+    
+    .so-do-modal-actions {
+        flex-direction: column;
+    }
+    
+    .so-do-modal-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 /* Mermaid diagram styling */
@@ -168,4 +454,44 @@
     border-top: 3px solid #73d239;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-} 
+}
+
+
+
+.so-do-zoom-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.so-do-zoom-container:active {
+    cursor: grabbing;
+}
+
+.so-do-zoom-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s ease;
+    cursor: grab;
+}
+
+.so-do-zoom-content:active {
+    cursor: grabbing;
+}
+
+.so-do-zoom-content svg {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.15));
+    pointer-events: none;
+}
+
+ 

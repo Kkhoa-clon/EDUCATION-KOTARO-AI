@@ -307,12 +307,24 @@ YÊU CẦU: ${userInput}`;
     displayResult(mermaidCode, container) {
         container.style.display = 'block';
         container.innerHTML = `
-            <h4>🎯 Sơ đồ đã được tạo thành công!</h4>
+            <div class="so-do-header">
+                <div class="so-do-actions">
+                    <button class="so-do-action-btn" id="view-detail-btn" title="Xem chi tiết">
+                        <span class="material-symbols-rounded">zoom_in</span>
+                    </button>
+                    <button class="so-do-action-btn" id="download-btn" title="Tải về">
+                        <span class="material-symbols-rounded">download</span>
+                    </button>
+                </div>
+            </div>
             <div class="so-do-preview" id="mermaid-preview"></div>
         `;
 
         // Render Mermaid diagram
         this.renderMermaidDiagram(mermaidCode, 'mermaid-preview');
+        
+        // Setup action buttons
+        this.setupActionButtons(mermaidCode);
     }
 
     async renderMermaidDiagram(code, containerId) {
@@ -348,6 +360,157 @@ YÊU CẦU: ${userInput}`;
         }
     }
 
+    async renderMermaidDiagramWithZoom(code, containerId) {
+        try {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '<div class="so-do-loading"><div class="spinner"></div><p>Đang render sơ đồ...</p></div>';
+            
+            // Đợi Mermaid load xong
+            if (typeof mermaid === 'undefined') {
+                await new Promise(resolve => {
+                    const checkMermaid = setInterval(() => {
+                        if (typeof mermaid !== 'undefined') {
+                            clearInterval(checkMermaid);
+                            resolve();
+                        }
+                    }, 100);
+                });
+            }
+
+            // Tạo unique ID cho diagram
+            const diagramId = 'mermaid-diagram-zoom-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+
+            // Render diagram
+            const { svg } = await mermaid.render(diagramId, code);
+            container.innerHTML = svg;
+            
+            // Setup zoom functionality after rendering
+            this.setupZoomFunctionality();
+        } catch (error) {
+            console.error('Lỗi render Mermaid:', error);
+            document.getElementById(containerId).innerHTML = `
+                <div class="so-do-error">
+                    Lỗi khi render sơ đồ: ${error.message}
+                </div>
+            `;
+        }
+    }
+
+    setupZoomControls() {
+        let currentZoom = 1;
+        const zoomStep = 0.2;
+        const minZoom = 0.5;
+        const maxZoom = 3;
+
+        const zoomContainer = document.getElementById('zoom-container');
+        const zoomContent = document.getElementById('zoom-content');
+
+        // Zoom in button
+        document.getElementById('zoom-in-btn').addEventListener('click', () => {
+            if (currentZoom < maxZoom) {
+                currentZoom += zoomStep;
+                this.applyZoom(zoomContent, currentZoom);
+            }
+        });
+
+        // Zoom out button
+        document.getElementById('zoom-out-btn').addEventListener('click', () => {
+            if (currentZoom > minZoom) {
+                currentZoom -= zoomStep;
+                this.applyZoom(zoomContent, currentZoom);
+            }
+        });
+
+        // Reset zoom button
+        document.getElementById('reset-zoom-btn').addEventListener('click', () => {
+            currentZoom = 1;
+            this.applyZoom(zoomContent, currentZoom);
+        });
+
+        // Mouse wheel zoom
+        zoomContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -zoomStep : zoomStep;
+            const newZoom = Math.max(minZoom, Math.min(maxZoom, currentZoom + delta));
+            currentZoom = newZoom;
+            this.applyZoom(zoomContent, currentZoom);
+        });
+    }
+
+    setupZoomFunctionality() {
+        const zoomContainer = document.getElementById('zoom-container');
+        const zoomContent = document.getElementById('zoom-content');
+        
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
+
+        // Mouse events for panning
+        zoomContent.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            zoomContent.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            
+            this.applyTransform(zoomContent, translateX, translateY);
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            zoomContent.style.cursor = 'grab';
+        });
+
+        // Touch events for mobile
+        zoomContent.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
+            }
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging || e.touches.length !== 1) return;
+            e.preventDefault();
+            
+            translateX = e.touches[0].clientX - startX;
+            translateY = e.touches[0].clientY - startY;
+            
+            this.applyTransform(zoomContent, translateX, translateY);
+        });
+
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        // Double click to reset
+        zoomContent.addEventListener('dblclick', () => {
+            translateX = 0;
+            translateY = 0;
+            this.applyTransform(zoomContent, translateX, translateY);
+        });
+    }
+
+    applyZoom(element, zoom) {
+        element.style.transform = `scale(${zoom})`;
+        element.style.transformOrigin = 'center center';
+    }
+
+    applyTransform(element, x, y) {
+        const currentTransform = element.style.transform;
+        const scaleMatch = currentTransform.match(/scale\(([^)]+)\)/);
+        const scale = scaleMatch ? scaleMatch[1] : '1';
+        
+        element.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+        element.style.transformOrigin = 'center center';
+    }
+
     showError(message) {
         const resultContainer = document.querySelector('.so-do-result');
         resultContainer.style.display = 'block';
@@ -361,6 +524,131 @@ YÊU CẦU: ${userInput}`;
 
 
 
+
+    setupActionButtons(mermaidCode) {
+        // View detail button
+        document.getElementById('view-detail-btn').addEventListener('click', () => {
+            this.showDetailModal(mermaidCode);
+        });
+
+        // Download button
+        document.getElementById('download-btn').addEventListener('click', () => {
+            this.downloadDiagram(mermaidCode);
+        });
+    }
+
+    showDetailModal(mermaidCode) {
+        // Create modal for detailed view with zoom functionality
+        const modal = document.createElement('div');
+        modal.className = 'so-do-modal';
+        modal.innerHTML = `
+            <div class="so-do-modal-content">
+                <div class="so-do-modal-header">
+                    <h3>Xem chi tiết sơ đồ</h3>
+                    <button class="so-do-modal-close" id="modal-close">
+                        <span class="material-symbols-rounded">close</span>
+                    </button>
+                </div>
+                <div class="so-do-modal-body">
+                    <div class="so-do-modal-preview" id="modal-preview">
+                        <div class="so-do-zoom-container" id="zoom-container">
+                            <div class="so-do-zoom-content" id="zoom-content"></div>
+                        </div>
+                    </div>
+                    <div class="so-do-modal-actions">
+                        <button class="so-do-modal-btn" id="modal-download">
+                            <span class="material-symbols-rounded">download</span>
+                            Tải về
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        // Render diagram in modal with zoom functionality
+        this.renderMermaidDiagramWithZoom(mermaidCode, 'zoom-content');
+
+
+
+        // Setup modal actions
+        document.getElementById('modal-close').addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+
+        document.getElementById('modal-download').addEventListener('click', () => {
+            this.downloadDiagram(mermaidCode);
+        });
+
+        // Close modal on outside click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                document.body.removeChild(modal);
+            }
+        });
+    }
+
+    async downloadDiagram(mermaidCode) {
+        try {
+            const diagramId = 'download-diagram-' + Date.now();
+            const { svg } = await mermaid.render(diagramId, mermaidCode);
+            
+            // Convert SVG to blob
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            
+            // Create download link
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `so-do-${Date.now()}.svg`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            // Cleanup
+            URL.revokeObjectURL(url);
+            
+            this.showSuccess('Sơ đồ đã được tải về thành công!');
+        } catch (error) {
+            console.error('Lỗi khi tải về:', error);
+            this.showError('Lỗi khi tải về sơ đồ');
+        }
+    }
+
+    async copyCodeToClipboard(mermaidCode) {
+        try {
+            await navigator.clipboard.writeText(mermaidCode);
+            this.showSuccess('Code đã được sao chép vào clipboard!');
+        } catch (error) {
+            console.error('Lỗi khi sao chép:', error);
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = mermaidCode;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            this.showSuccess('Code đã được sao chép vào clipboard!');
+        }
+    }
+
+    showSuccess(message) {
+        const resultContainer = document.querySelector('.so-do-result');
+        const successDiv = document.createElement('div');
+        successDiv.className = 'so-do-success';
+        successDiv.innerHTML = `<strong>✅ Thành công:</strong> ${message}`;
+        
+        // Insert at the top of result container
+        resultContainer.insertBefore(successDiv, resultContainer.firstChild);
+        
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            if (successDiv.parentNode) {
+                successDiv.parentNode.removeChild(successDiv);
+            }
+        }, 3000);
+    }
 
     escapeHtml(text) {
         const div = document.createElement('div');
