@@ -5,8 +5,7 @@ const sendMessageButton = document.querySelector("#send-message"); // Nút gửi
 const fileInput = document.querySelector("#file-input"); // Input chọn file
 const fileUploadWrapper = document.querySelector(".file-upload-wrapper"); // Khung hiển thị file đã chọn
 const fileCancelButton = document.querySelector("#file-cancel"); // Nút hủy file
-const chatbotToggler = document.querySelector("#chatbot-toggler"); // Nút mở/đóng chatbot
-const closeChatbot = document.querySelector("#close-chatbot"); // Nút đóng chatbot
+
 
 // Cấu hình API
 const API_KEY = "AIzaSyBninbq7h5tAnlzcHLQ8UYryQ-2AAXJTl8"; // API key để kết nối với Gemini
@@ -38,7 +37,7 @@ const createMessageElement = (content, ...classes) => {
     return div; // Trả về phần tử đã tạo
 };
 
-// Hàm render markdown an toàn và highlight code, hỗ trợ bảng, danh sách, JSON, công thức, HTML
+// Hàm render markdown an toàn và highlight code, hỗ trợ bảng, danh sách, JSON, HTML
 function renderBotOutput(rawText) {
     // Kiểm tra nếu là JSON
     try {
@@ -46,22 +45,8 @@ function renderBotOutput(rawText) {
         return `<pre class="json-block"><code class="json">${JSON.stringify(jsonObj, null, 2)}</code></pre>`;
     } catch (e) {}
     
-    // Xử lý công thức toán học trước khi parse markdown
-    let processedText = rawText;
-    const mathFormulas = [];
-    let formulaIndex = 0;
-    
-    // Bảo vệ công thức toán học khỏi markdown parser
-    const mathRegex = /(\$\$.*?\$\$|\$.*?\$|\\\[.*?\\\]|\\\(.*?\\\))/g;
-    processedText = processedText.replace(mathRegex, (match) => {
-        const key = `__MATH_${formulaIndex}__`;
-        mathFormulas[formulaIndex] = match;
-        formulaIndex++;
-        return key;
-    });
-    
-    // Render markdown với text đã được bảo vệ
-    const html = marked.parse(processedText, {
+    // Render markdown trực tiếp
+    const html = marked.parse(rawText, {
         breaks: true,
         gfm: true,
         headerIds: false,
@@ -76,16 +61,9 @@ function renderBotOutput(rawText) {
     // Sanitize HTML - loại bỏ các tag nguy hiểm
     tempDiv.querySelectorAll('script, style, iframe, object, embed, form, input, button, select, textarea').forEach(el => el.remove());
     
-    // Khôi phục công thức toán học
-    let finalHtml = tempDiv.innerHTML;
-    mathFormulas.forEach((formula, index) => {
-        const key = `__MATH_${index}__`;
-        finalHtml = finalHtml.replace(key, formula);
-    });
-    
     // Tạo element tạm để xử lý styling
     const finalDiv = document.createElement('div');
-    finalDiv.innerHTML = finalHtml;
+    finalDiv.innerHTML = tempDiv.innerHTML;
     
     // Highlight code blocks với syntax highlighting
     if (window.hljs) {
@@ -437,8 +415,6 @@ document.querySelector(".chat-form").appendChild(picker);
 // Gán sự kiện cho các nút
 sendMessageButton.addEventListener("click", (e) => handleOutgoingMessage(e));
 document.querySelector("#file-upload").addEventListener("click", (e) => fileInput.click());
-chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
-closeChatbot.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
 
 // Hàm thay đổi logo và avatar chatbot
 function updateChatbotImages(logoUrl, avatarUrl) {

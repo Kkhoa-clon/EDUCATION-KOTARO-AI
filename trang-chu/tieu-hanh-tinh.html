@@ -6,9 +6,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <meta name="google-site-verification" content="GTAdd7e4F9ZHNyTFcWm-1K8Ia0Xo9pDLlq4DWLYGWYw" />  <!--the tim kiem len google -->
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="icon" href="images/logo-Photoroom.png" type="image/x-jpg">
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="icon" href="../hinh-anh/logo-Photoroom.png" type="image/x-jpg">
+    <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
@@ -17,7 +17,7 @@
 
     <!-- Header -->
     <header id="header">
-        <h1 id="logo"><a href="index.html">KOTARO AI</a></h1>
+        <h1 id="logo"><a href="../index.html">KOTARO AI</a></h1>
         <nav id="nav">
             <ul>
                 <li><a href="#">Tải Xuống</a></li>
@@ -43,10 +43,10 @@
                 <li>
                     <a href="#">Vũ Trụ</a>
                     <ul>
-                        <li><a href="HeMatTroi.html">Hệ Mặt Trời</a></li>
-                        <li><a href="TieuHanhTinh.html">Tiểu Hành Tinh</a></li>
-                        <li><a href="TraiDat.html">Trái Đất</a></li>
-                        <li><a href="HanhTinhKhac.html">Hành Tinh Ngoài Hệ Mặt Trời</a></li>
+                        <li><a href="he-mat-troi.html">Hệ Mặt Trời</a></li>
+                        <li><a href="tieu-hanh-tinh.html">Tiểu Hành Tinh</a></li>
+                        <li><a href="trai-dat.html">Trái Đất</a></li>
+                        <li><a href="hanh-tinh-khac.html">Hành Tinh Ngoài Hệ Mặt Trời</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Tạo Câu Hỏi</a></li>
@@ -90,12 +90,6 @@
         left: 0;
     }
 
-    /* Iframe chiếm toàn bộ container */
-    #nasa-iframe {
-        width: 100%;
-        height: 80%;
-        border: none;   /* Bỏ viền iframe */
-    }
 
     .nasa-iframe-container {
         display: flex;
@@ -104,12 +98,18 @@
         height: 100vh; /* hoặc chiều cao bạn muốn */
     }
 
+    /* Iframe chiếm toàn bộ container */
+    #nasa-iframe {
+        width: 100%;
+        height: 80%;
+        border: none;   /* Bỏ viền iframe */
+    }
 </style>
 <!-- Container chứa iframe -->
 <div class="nasa-iframe-container">
     <iframe
             id="nasa-iframe"
-            src="https://eyes.nasa.gov/apps/solar-system/#/home"
+            src="https://eyes.nasa.gov/apps/asteroids/#/home"
             allowfullscreen>
     </iframe>
 </div>
