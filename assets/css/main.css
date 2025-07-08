@@ -4106,3 +4106,33 @@ input, select, textarea {
 					}
 
 	}
+
+/* --- HEADER STYLE FROM he-mat-troi.html (mặc định cho toàn site) --- */
+#header {
+    background: rgba(39, 40, 51, 0.95) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+#header.scrolled {
+    background: rgba(39, 40, 51, 0.98) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4) !important;
+}
+#logo a {
+    color: #73d239 !important;
+    font-weight: 300;
+    text-decoration: none;
+    font-size: 1.5em;
+    transition: color 0.3s ease;
+}
+#logo a:hover {
+    color: #8ee63e !important;
+}
+
+
