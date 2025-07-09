@@ -4135,4 +4135,99 @@ input, select, textarea {
     color: #8ee63e !important;
 }
 
+/* === Wiki Search Box Modern UI === */
+.wiki-search-box {
+  display: none;
+  position: absolute;
+  top: 3.5em;
+  right: 2em;
+  background: #23243a;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  padding: 1.2em 1.2em 1em 1.2em;
+  z-index: 9999;
+  min-width: 320px;
+  max-width: 95vw;
+  animation: wikiFadeIn 0.25s;
+}
+@keyframes wikiFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.wiki-search-form {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+.wiki-search-input {
+  flex: 1;
+  padding: 0.7em 1em;
+  border-radius: 8px;
+  border: none;
+  font-size: 1.1em;
+  background: #181920;
+  color: #fff;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+.wiki-search-input:focus {
+  box-shadow: 0 0 0 2px #73d239;
+}
+.wiki-search-btn {
+  background: #73d239;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7em 1.1em;
+  color: #23243a;
+  font-weight: 500;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wiki-search-btn:hover {
+  background: #8ee63e;
+}
+.wiki-search-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.3em;
+  margin-left: 0.2em;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.wiki-search-close:hover {
+  color: #e44c65;
+}
+.wiki-search-result {
+  margin-top: 1.2em;
+  color: #fff;
+  font-size: 1em;
+  min-height: 2em;
+}
+.wiki-search-result h3 {
+  color: #73d239;
+  font-size: 1.2em;
+  margin-bottom: 0.3em;
+}
+.wiki-search-result a {
+  color: #73d239;
+  text-decoration: underline;
+  font-weight: 500;
+}
+@media (max-width: 600px) {
+  .wiki-search-box {
+    right: 0.5em;
+    left: 0.5em;
+    min-width: unset;
+    padding: 1em 0.5em 0.7em 0.5em;
+  }
+  .wiki-search-input {
+    font-size: 1em;
+  }
+}
+
 

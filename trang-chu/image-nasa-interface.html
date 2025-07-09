@@ -1,0 +1,575 @@
+<!DOCTYPE HTML>
+<html lang="vi">
+<head>
+    <title>Kotaro AI - Ảnh Thiên Văn NASA (APOD)</title>
+    <meta name="description" content="Khám phá vũ trụ mỗi ngày với Ảnh Thiên Văn NASA (APOD) - Xem, tải về và tìm hiểu ý nghĩa các bức ảnh nổi bật từ NASA, tự động dịch sang tiếng Việt cho học sinh và người yêu thiên văn." />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="google-site-verification" content="GTAdd7e4F9ZHNyTFcWm-1K8Ia0Xo9pDLlq4DWLYGWYw" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="icon" href="../hinh-anh/logo-Photoroom.png" type="image/x-jpg">
+    <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
+    <!-- Custom CSS for Solar System Page -->
+    <style>
+        /* Reset và base styles */
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Roboto", Helvetica, sans-serif;
+            background: #1c1d26;
+            color: rgba(255, 255, 255, 0.75);
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        #header {
+            background: rgba(39, 40, 51, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        #header.scrolled {
+            background: rgba(39, 40, 51, 0.98);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        #logo a {
+            color: #73d239;
+            font-weight: 300;
+            text-decoration: none;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+        
+        #logo a:hover {
+            color: #8ee63e;
+        }
+        
+        /* Main Content Container */
+        .solar-system-container {
+            margin-top: 3.5em;
+            min-height: calc(100vh - 3.5em);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #1c1d26 0%, #272833 50%, #1c1d26 100%);
+            padding: 4em 2em;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');
+            opacity: 0.3;
+            animation: twinkle 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            100% { opacity: 0.4; }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-title {
+            font-size: 3em;
+            font-weight: 300;
+            color: #ffffff;
+            margin-bottom: 0.5em;
+            text-shadow: 0 2px 10px rgba(115, 210, 57, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2em;
+            line-height: 1.6;
+        }
+        
+        /* NASA Eyes Container */
+        .nasa-eyes-container {
+            flex: 1;
+            position: relative;
+            background: #000;
+            border-radius: 15px;
+            margin: 2em;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .nasa-eyes-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+        }
+        
+        .nasa-eyes-header {
+            background: linear-gradient(90deg, #73d239, #8ee63e);
+            color: #000;
+            padding: 1em 2em;
+            text-align: center;
+            font-weight: 300;
+        }
+        
+        .nasa-eyes-title {
+            font-size: 1.5em;
+            margin: 0;
+            font-weight: 300;
+        }
+        
+        .nasa-eyes-subtitle {
+            font-size: 0.9em;
+            margin: 0.5em 0 0 0;
+            opacity: 0.8;
+        }
+        
+        .nasa-iframe-wrapper {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 300px);
+            min-height: 500px;
+        }
+        
+        #nasa-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+        }
+        
+        /* Loading Animation */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(115, 210, 57, 0.3);
+            border-top: 3px solid #73d239;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Info Panel */
+        .info-panel {
+            background: rgba(39, 40, 51, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin: 2em;
+            padding: 2em;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-panel h3 {
+            color: #73d239;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            font-weight: 300;
+        }
+        
+        .info-panel p {
+            line-height: 1.6;
+            margin-bottom: 1em;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 0.5em 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            padding-left: 1.5em;
+        }
+        
+        .feature-list li:before {
+            content: '✦';
+            color: #73d239;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Responsive Design */
+        @media screen and (max-width: 980px) {
+            .hero-title {
+                font-size: 2.5em;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1em;
+            }
+            
+            .nasa-eyes-container {
+                margin: 1em;
+            }
+            
+            .info-panel {
+                margin: 1em;
+                padding: 1.5em;
+            }
+        }
+        
+        @media screen and (max-width: 736px) {
+            .hero-section {
+                padding: 3em 1em;
+            }
+            
+            .hero-title {
+                font-size: 2em;
+            }
+            
+            .hero-subtitle {
+                font-size: 1em;
+            }
+            
+            .nasa-eyes-header {
+                padding: 1em;
+            }
+            
+            .nasa-eyes-title {
+                font-size: 1.2em;
+            }
+            
+            .nasa-eyes-subtitle {
+                font-size: 0.8em;
+            }
+            
+            .nasa-iframe-wrapper {
+                height: calc(100vh - 250px);
+                min-height: 400px;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8em;
+            }
+            
+            .nasa-eyes-container {
+                margin: 0.5em;
+                border-radius: 10px;
+            }
+            
+            .info-panel {
+                margin: 0.5em;
+                padding: 1em;
+            }
+            
+            .nasa-iframe-wrapper {
+                height: calc(100vh - 200px);
+                min-height: 350px;
+            }
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1c1d26;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #73d239;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8ee63e;
+        }
+    </style>
+</head>
+
+<body class="is-preload">
+    <div id="page-wrapper">
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="../index.html">KOTARO AI</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="#">Tải Xuống</a></li>
+                    <li><a href="#">Wikiperdia AI</a></li>
+                    <li>
+                        <a href="#">Thư Viện</a>
+                        <ul>
+                            <li><a href="#">Nghiên Cứu</a></li>
+                            <li><a href="#">Ebook</a></li>
+                            <li>
+                                <a href="#">Ôn Luyện Học Sinh Giỏi</a>
+                                <ul>
+                                    <li><a href="#">Vật Lý</a></li>
+                                    <li><a href="#">Hóa Học</a></li>
+                                    <li><a href="#">Sinh Học</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Trợ Lý Sen</a></li>
+                    <li><a href="#">Máy Tính Khoa Học</a></li>
+                    <li><a href="#">Thiên Văn AI</a></li>
+                    <li>
+                        <a href="#">Vũ Trụ</a>
+                        <ul>
+                            <li><a href="he-mat-troi.html">Hệ Mặt Trời</a></li>
+                            <li><a href="tieu-hanh-tinh.html">Tiểu Hành Tinh</a></li>
+                            <li><a href="trai-dat.html">Trái Đất</a></li>
+                            <li><a href="hanh-tinh-khac.html">Hành Tinh Ngoài Hệ Mặt Trời</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Tạo Câu Hỏi</a></li>
+                    <li><a href="#">Trợ Lý Công Thức</a></li>
+                    <li>
+                        <a href="#">Khoa Học Tự Nhiên</a>
+                        <ul>
+                            <li><a href="#">Vật Lý</a></li>
+                            <li><a href="#">Hóa Học</a></li>
+                            <li><a href="#">Sinh Học</a></li>
+                            <li>
+                                <a href="#">Mô Phỏng Thí Nghiệm 2D</a>
+                                <ul>
+                                    <li><a href="#">Thí Nghiệm Vật Lý</a></li>
+                                    <li><a href="#">Thí Nghiệm Hóa Học</a></li>
+                                    <li><a href="#">Thí Nghiệm Sinh Học</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    <div class="container" style="margin-top: 4em; margin-bottom: 2em;">
+      <div class="row aln-center">
+        <div class="col-12 col-8-medium col-6">
+          <section class="box special" style="text-align: center;">
+            <h2 class="major">Ảnh Thiên Văn Thời Gian Thực</h2>
+            <form onsubmit="return false;" style="margin-bottom: 2em;">
+              <div class="row gtr-uniform aln-center">
+                <div class="col-8 col-12-small">
+                  <input type="text" id="dateText" class="input" placeholder="Nhập ngày (dd/mm/yyyy)" maxlength="10" required />
+                </div>
+                <div class="col-4 col-12-small">
+                  <button id="fetchBtn" class="button primary fit icon solid fa-search" type="submit">Xem ảnh</button>
+                </div>
+              </div>
+            </form>
+            <div id="apod" style="margin-top: 1.5em;">
+              <h3 id="title"></h3>
+              <div class="image fit" style="position: relative;">
+                <img id="image" alt="Astronomy Picture" style="display: none; cursor: zoom-in; background: #111;" />
+              </div>
+              <div id="apod-buttons" style="display: flex; justify-content: center; gap: 1em; margin-top: 1em;">
+                <button id="downloadBtn" class="button small icon solid fa-download" style="display: none;">Tải ảnh</button>
+                <button id="viewDetailBtn" class="button small icon solid fa-expand" style="display: none;">Xem chi tiết</button>
+              </div>
+              <h2 style="margin-top: 1.5em;">Mô Tả Về Hình Ảnh</h2>
+              <p class="description" id="explanation" style="margin-top: 1.5em;"></p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!-- Modal for detailed image view -->
+    <div id="imageModal" class="modal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); justify-content:center; align-items:center;">
+      <span id="closeModal" style="position:absolute; top:30px; right:40px; font-size:2em; color:#fff; cursor:pointer;">&times;</span>
+      <img id="modalImg" src="" style="max-width:90vw; max-height:80vh; border-radius:12px; box-shadow:0 0 40px #000;" />
+    </div>
+    <!-- Google Translate widget -->
+    <div id="google_translate_element" style="position: fixed; bottom: 10px; right: 10px; z-index: 3000;"></div>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'vi', includedLanguages: 'en,vi,fr,ja,zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+      }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+      const apiKey = "QjukGaZAtCoeMB9z9M2h36VG0gEauYpVOXLEPGyP";
+      const dateText = document.getElementById("dateText");
+      const fetchBtn = document.getElementById("fetchBtn");
+      const titleEl = document.getElementById("title");
+      const imageEl = document.getElementById("image");
+      const explanationEl = document.getElementById("explanation");
+      const downloadBtn = document.getElementById("downloadBtn");
+      const viewDetailBtn = document.getElementById("viewDetailBtn");
+      const imageModal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("modalImg");
+      const closeModal = document.getElementById("closeModal");
+      let currentImageUrl = "";
+
+      // Hàm dịch sử dụng Lingva Translate API, chỉ dịch từ tiếng Anh sang tiếng Việt
+      async function lingvaTranslate(text) {
+          try {
+              const res = await fetch('https://lingva.ml/api/v1/en/vi/' + encodeURIComponent(text));
+              const data = await res.json();
+              return data.translation || text;
+          } catch {
+              return text;
+          }
+      }
+
+      async function fetchAPOD() {
+          let date = '';
+          if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateText.value)) {
+              const [d, m, y] = dateText.value.split('/');
+              date = `${y}-${m}-${d}`;
+          }
+          const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}${date ? `&date=${date}` : ""}`;
+          titleEl.textContent = "Đang tải...";
+          imageEl.style.display = "none";
+          downloadBtn.style.display = "none";
+          viewDetailBtn.style.display = "none";
+          try {
+              const res = await fetch(url);
+              const data = await res.json();
+              if (data.media_type === "image") {
+                  // Dịch các trường trả về bằng Lingva Translate API (chỉ tiếng Việt)
+                  const [viTitle, viExplanation] = await Promise.all([
+                      lingvaTranslate(data.title),
+                      lingvaTranslate(data.explanation)
+                  ]);
+                  titleEl.textContent = viTitle;
+                  imageEl.src = data.url;
+                  imageEl.style.display = "block";
+                  explanationEl.textContent = viExplanation;
+                  downloadBtn.style.display = "inline-block";
+                  viewDetailBtn.style.display = "inline-block";
+                  currentImageUrl = data.url;
+              } else {
+                  titleEl.textContent = "Không hỗ trợ media loại này.";
+                  imageEl.style.display = "none";
+                  explanationEl.textContent = "Hôm nay NASA không có hình ảnh, chỉ có video hoặc file khác.";
+                  downloadBtn.style.display = "none";
+                  viewDetailBtn.style.display = "none";
+                  currentImageUrl = "";
+              }
+          } catch (err) {
+              titleEl.textContent = "Lỗi tải dữ liệu!";
+              imageEl.style.display = "none";
+              explanationEl.textContent = "Vui lòng kiểm tra lại API key hoặc kết nối mạng.";
+              downloadBtn.style.display = "none";
+              viewDetailBtn.style.display = "none";
+              currentImageUrl = "";
+          }
+      }
+      fetchBtn.onclick = fetchAPOD;
+      dateText.addEventListener('keyup', function(e) { if (e.key === 'Enter') fetchAPOD(); });
+      // Tải dữ liệu ngay khi vào trang
+      fetchAPOD();
+      // Nút tải ảnh
+      downloadBtn.onclick = function() {
+          if (!currentImageUrl) return;
+          // Lấy tên file từ URL nếu có, fallback là nasa-apod.jpg
+          let filename = 'nasa-apod.jpg';
+          try {
+              const urlObj = new URL(currentImageUrl);
+              const pathParts = urlObj.pathname.split('/');
+              const lastPart = pathParts[pathParts.length - 1];
+              if (lastPart && lastPart.includes('.')) filename = lastPart;
+          } catch {}
+          fetch(currentImageUrl)
+              .then(resp => resp.blob())
+              .then(blob => {
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.style.display = 'none';
+                  a.href = url;
+                  a.download = filename;
+                  document.body.appendChild(a);
+                  a.click();
+                  window.URL.revokeObjectURL(url);
+                  document.body.removeChild(a);
+              });
+      };
+      // Xem chi tiết ảnh (modal)
+      viewDetailBtn.onclick = function() {
+          if (!currentImageUrl) return;
+          modalImg.src = currentImageUrl;
+          imageModal.style.display = 'flex';
+      };
+      imageEl.onclick = viewDetailBtn.onclick;
+      closeModal.onclick = function() {
+          imageModal.style.display = 'none';
+          modalImg.src = '';
+      };
+      imageModal.onclick = function(e) {
+          if (e.target === imageModal) {
+              imageModal.style.display = 'none';
+              modalImg.src = '';
+          }
+      };
+      </script>
+    <!-- Scripts -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.scrolly.min.js"></script>
+    <script src="../assets/js/jquery.dropotron.min.js"></script>
+    <script src="../assets/js/jquery.scrollex.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/cuon-trang.js"></script>
+</body>
+</html>

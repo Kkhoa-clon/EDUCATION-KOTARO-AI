@@ -249,4 +249,76 @@
 
 })(jQuery);
 
+// === Wiki Search Box Modern UI ===
+document.addEventListener('DOMContentLoaded', function() {
+  const trigger = document.getElementById('wiki-search-trigger');
+  const box = document.getElementById('wiki-search-box');
+  const closeBtn = document.getElementById('wiki-search-close');
+  const form = document.getElementById('wiki-search-form');
+  const input = document.getElementById('wiki-query');
+  const resultDiv = document.getElementById('wiki-result');
+
+  // Hiện box khi nhấn nút search
+  if (trigger && box) {
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      box.style.display = 'block';
+      input.value = '';
+      resultDiv.innerHTML = '';
+      setTimeout(() => input.focus(), 100);
+    });
+  }
+  // Ẩn box khi nhấn nút đóng
+  if (closeBtn && box) {
+    closeBtn.addEventListener('click', function() {
+      box.style.display = 'none';
+    });
+  }
+  // Ẩn box khi click ra ngoài
+  document.addEventListener('mousedown', function(e) {
+    if (box && box.style.display === 'block' && !box.contains(e.target) && e.target !== trigger) {
+      box.style.display = 'none';
+    }
+  });
+  // ESC để đóng
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && box && box.style.display === 'block') {
+      box.style.display = 'none';
+    }
+  });
+  // Submit tìm kiếm
+  if (form && input && resultDiv) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const query = input.value.trim();
+      resultDiv.innerHTML = '🔍 Đang tìm kiếm...';
+      if (!query) {
+        resultDiv.innerHTML = '❗ Vui lòng nhập từ khóa.';
+        return;
+      }
+      const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
+      fetch(apiUrl)
+        .then(res => {
+          if (!res.ok) throw new Error('Không tìm thấy bài viết.');
+          return res.json();
+        })
+        .then(data => {
+          let html = '';
+          if (data.title) html += `<h3>${data.title}</h3>`;
+          if (data.extract) html += `<p>${data.extract}</p>`;
+          if (data.content_urls && data.content_urls.desktop && data.content_urls.desktop.page) {
+            html += `<a href="${data.content_urls.desktop.page}" target="_blank">🔗 Xem chi tiết</a>`;
+          }
+          if (data.thumbnail && data.thumbnail.source) {
+            html = `<img src="${data.thumbnail.source}" alt="${data.title}" style="width:70px;height:70px;object-fit:cover;border-radius:8px;float:left;margin-right:1em;box-shadow:0 2px 8px rgba(0,0,0,0.15);background:#fff;">` + html;
+          }
+          resultDiv.innerHTML = html || '❌ Không tìm thấy thông tin phù hợp.';
+        })
+        .catch(() => {
+          resultDiv.innerHTML = '❌ Không tìm thấy thông tin phù hợp.';
+        });
+    });
+  }
+});
+
 
