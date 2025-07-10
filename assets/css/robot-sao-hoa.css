@@ -2,10 +2,10 @@
 ví dụ như định nghĩa ảnh nền */
 
 .background-row {
-    background-image: url('https://cdn.mos.cms.futurecdn.net/GY9JBbrzsGsz2psUv6pgdV.jpg'); 
-    background-size: cover; 
-    background-repeat: no-repeat; 
-    background-position: center center; 
+    background-image: url('https://cdn.mos.cms.futurecdn.net/GY9JBbrzsGsz2psUv6pgdV.jpg');
+    background-size: 120% auto; /* Phóng to background-image một chút */
+    background-repeat: no-repeat;
+    background-position: center center;
     min-height: 260px; /* tăng chiều cao nền */
     display: flex;
     flex-direction: column;
@@ -22,7 +22,7 @@ ví dụ như định nghĩa ảnh nền */
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.8); /* Nền trắng mờ */
+    background: rgba(144, 238, 144, 0.08); /* Nền xanh lá nhạt mờ mức thấp nhất */
     z-index: 1050; /* Đảm bảo nằm trên mọi thành phần khác */
     display: flex;
     justify-content: center;
