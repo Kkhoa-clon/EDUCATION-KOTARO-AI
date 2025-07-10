@@ -1,0 +1,36 @@
+/* chỉ cho phép CSS cho những gì không thể làm với bootstrap,
+ví dụ như định nghĩa ảnh nền */
+
+.background-row {
+    background-image: url('https://cdn.mos.cms.futurecdn.net/GY9JBbrzsGsz2psUv6pgdV.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center center; 
+    min-height: 260px; /* tăng chiều cao nền */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    padding: 2.5rem 0.5rem; /* tăng padding trên dưới */
+}
+
+.spinner-overlay {
+    position: fixed; /* Vị trí cố định để phủ toàn màn hình */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8); /* Nền trắng mờ */
+    z-index: 1050; /* Đảm bảo nằm trên mọi thành phần khác */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container của spinner (căn giữa) */
+.spinner-container img {
+    width: 80px; /* Kích thước spinner */
+    height: 80px;
+}
