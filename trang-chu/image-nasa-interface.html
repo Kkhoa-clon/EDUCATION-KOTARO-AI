@@ -8,22 +8,42 @@
     <meta name="google-site-verification" content="GTAdd7e4F9ZHNyTFcWm-1K8Ia0Xo9pDLlq4DWLYGWYw" />
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="icon" href="../hinh-anh/logo-Photoroom.png" type="image/x-jpg">
-    <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>    
-    <!-- Custom CSS for NASA APOD Page -->
+    <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+    
     <style>
-        /* Custom styles for NASA APOD page */
+        /* NASA APOD Modern Responsive Design */
+        /* ================================= */
+        
+                 /* CSS Reset & Base Styles */
+         * {
+             box-sizing: border-box;
+         }
+        
+        
+        
+        /* Main Container */
         .apod-container {
-            margin-top: 3.5em;
-            min-height: calc(100vh - 3.5em);
+            margin-top: 3.5rem;
+            min-height: calc(100vh - 3.5rem);
+            width: 100%;
+            overflow-x: hidden;
         }
         
-        .apod-hero {
-            background: linear-gradient(135deg, #1c1d26 0%, #272833 50%, #1c1d26 100%);
-            padding: 4em 2em;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+                 /* Hero Section */
+         .apod-hero {
+             background: linear-gradient(135deg, rgba(28, 29, 38, 0.7) 0%, rgba(39, 40, 51, 0.7) 50%, rgba(28, 29, 38, 0.7) 100%), url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+             background-size: cover;
+             background-position: center;
+             background-attachment: fixed;
+             padding: 2rem 1rem;
+             text-align: center;
+             position: relative;
+             overflow: hidden;
+             min-height: 60vh;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+         }
         
         .apod-hero::before {
             content: '';
@@ -45,88 +65,230 @@
         .apod-hero-content {
             position: relative;
             z-index: 2;
-            max-width: 800px;
+            max-width: 100%;
             margin: 0 auto;
+            padding: 0 1rem;
         }
         
         .apod-hero h2 {
-            font-size: 3em;
+            font-size: clamp(1.8rem, 5vw, 3rem);
             font-weight: 300;
             color: #ffffff;
-            margin-bottom: 0.5em;
+            margin-bottom: 1rem;
             text-shadow: 0 2px 10px rgba(115, 210, 57, 0.3);
+            line-height: 1.2;
         }
         
         .apod-hero p {
-            font-size: 1.2em;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 2em;
+            margin-bottom: 0;
             line-height: 1.6;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
         }
         
+        /* Main Content */
+        .content-wrapper {
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .main-section {
+            background: rgba(39, 40, 51, 0.5);
+            border-radius: 20px;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(115, 210, 57, 0.1);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-header h2 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: #73d239;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+        
+        .section-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+        
+        /* Form Styles */
         .apod-form {
-            margin-bottom: 2em;
+            margin-bottom: 2rem;
         }
         
-        .apod-form .row {
-            justify-content: center;
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-input,
+        .form-button {
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(115, 210, 57, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            outline: none;
+        }
+        
+        .form-input:focus {
+            border-color: #73d239;
+            box-shadow: 0 0 0 2px rgba(115, 210, 57, 0.2);
+        }
+        
+        .form-button {
+            background: linear-gradient(135deg, #73d239, #5fb82f);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .form-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(115, 210, 57, 0.4);
+        }
+        
+        .form-button.secondary {
+            background: linear-gradient(135deg, #4a4a4a, #2a2a2a);
+        }
+        
+        .form-button.secondary:hover {
+            box-shadow: 0 5px 15px rgba(74, 74, 74, 0.4);
+        }
+        
+        /* APOD Content */
+        .apod-content {
+            text-align: center;
+        }
+        
+        .apod-title {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #73d239;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            min-height: 2.5rem;
+            display: flex;
             align-items: center;
+            justify-content: center;
         }
         
         .apod-image-container {
             position: relative;
-            margin: 2em 0;
+            margin: 2rem 0;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             background: #000;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .apod-image-container:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
-            transition: all 0.3s ease;
         }
         
         .apod-image {
             width: 100%;
             height: auto;
             display: block;
-            cursor: zoom-in;
             background: #111;
+            object-fit: cover;
+            max-height: 70vh;
         }
         
         .apod-buttons {
             display: flex;
             justify-content: center;
-            gap: 1em;
-            margin-top: 1em;
+            gap: 1rem;
+            margin: 2rem 0;
             flex-wrap: wrap;
         }
         
-        .apod-description {
-            margin-top: 2em;
-            padding: 2em;
-            background: rgba(39, 40, 51, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        .apod-button {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid rgba(115, 210, 57, 0.5);
+            border-radius: 8px;
+            background: rgba(115, 210, 57, 0.1);
+            color: #73d239;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
         }
         
-        .apod-description h2 {
+        .apod-button:hover {
+            background: rgba(115, 210, 57, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(115, 210, 57, 0.3);
+        }
+        
+        .apod-button.primary {
+            background: linear-gradient(135deg, #73d239, #5fb82f);
+            color: #fff;
+            border-color: #73d239;
+        }
+        
+        .apod-description {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(28, 29, 38, 0.8);
+            border-radius: 15px;
+            border: 1px solid rgba(115, 210, 57, 0.1);
+            text-align: left;
+        }
+        
+        .apod-description h3 {
             color: #73d239;
-            font-size: 1.5em;
-            margin-bottom: 1em;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            margin-bottom: 1rem;
             font-weight: 300;
         }
         
         .apod-description p {
-            line-height: 1.6;
-            margin-bottom: 1em;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: clamp(0.9rem, 2vw, 1rem);
         }
         
-        /* Modal styles */
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -135,37 +297,48 @@
             top: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.95);
             justify-content: center;
             align-items: center;
+            padding: 1rem;
         }
         
         .modal img {
-            max-width: 90vw;
-            max-height: 80vh;
+            max-width: calc(100vw - 2rem);
+            max-height: calc(100vh - 2rem);
             border-radius: 12px;
-            box-shadow: 0 0 40px #000;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            object-fit: contain;
         }
         
         .close-modal {
             position: absolute;
-            top: 30px;
-            right: 40px;
-            font-size: 2em;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
             color: #fff;
             cursor: pointer;
-            transition: color 0.3s ease;
+            background: rgba(0, 0, 0, 0.7);
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
         }
         
         .close-modal:hover {
             color: #73d239;
+            background: rgba(0, 0, 0, 0.9);
+            border-color: #73d239;
         }
         
-        /* Loading animation */
+        /* Loading States */
         .loading {
-            text-align: center;
-            padding: 2em;
             color: #73d239;
+            position: relative;
         }
         
         .loading::after {
@@ -185,56 +358,180 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Error state */
         .error-state {
-            text-align: center;
-            padding: 2em;
             color: #e44c65;
         }
         
-        /* Responsive adjustments */
-        @media screen and (max-width: 980px) {
-            .apod-hero h2 {
-                font-size: 2.5em;
+        /* Google Translate Widget */
+        .translate-widget {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 3000;
+            background: rgba(28, 29, 38, 0.9);
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(115, 210, 57, 0.2);
+        }
+        
+        /* Responsive Design */
+        /* ================ */
+        
+        /* Small Mobile (480px+) */
+        @media screen and (min-width: 480px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
             }
             
-            .apod-hero p {
-                font-size: 1.1em;
+            .form-group:first-child {
+                grid-column: 1 / -1;
             }
         }
         
-        @media screen and (max-width: 736px) {
+                 /* Tablet Portrait (768px+) */
+         @media screen and (min-width: 768px) {
+            
             .apod-hero {
-                padding: 3em 1em;
+                padding: 3rem 2rem;
+                min-height: 70vh;
             }
             
-            .apod-hero h2 {
-                font-size: 2em;
+            .content-wrapper {
+                padding: 3rem 2rem;
             }
             
-            .apod-hero p {
-                font-size: 1em;
+            .main-section {
+                padding: 3rem 2rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 2fr 1fr 1fr;
+            }
+            
+            .form-group:first-child {
+                grid-column: 1;
             }
             
             .apod-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .apod-buttons .button {
-                width: 100%;
-                max-width: 300px;
+                gap: 1.5rem;
             }
         }
         
-        @media screen and (max-width: 480px) {
-            .apod-hero h2 {
-                font-size: 1.8em;
+        /* Tablet Landscape (1024px+) */
+        @media screen and (min-width: 1024px) {
+            .apod-hero {
+                padding: 4rem 2rem;
+                min-height: 80vh;
             }
             
-            .apod-description {
-                padding: 1em;
-                margin: 1em 0;
+            .content-wrapper {
+                padding: 4rem 2rem;
+            }
+            
+            .apod-image-container {
+                max-width: 80%;
+                margin: 2rem auto;
+            }
+        }
+        
+        /* Desktop (1200px+) */
+        @media screen and (min-width: 1200px) {
+            .content-wrapper {
+                padding: 5rem 2rem;
+            }
+            
+            .main-section {
+                padding: 4rem 3rem;
+            }
+            
+            .close-modal {
+                top: 2rem;
+                right: 2rem;
+                width: 4rem;
+                height: 4rem;
+                font-size: 2.5rem;
+            }
+        }
+        
+        /* Large Desktop (1440px+) */
+        @media screen and (min-width: 1440px) {
+            .apod-hero {
+                padding: 5rem 4rem;
+            }
+            
+            .apod-image-container {
+                max-width: 70%;
+            }
+        }
+        
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .apod-image-container:hover {
+                transform: none;
+            }
+            
+            .form-button:hover,
+            .apod-button:hover {
+                transform: none;
+            }
+            
+            .close-modal {
+                width: 4rem;
+                height: 4rem;
+                font-size: 2rem;
+            }
+        }
+        
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            .apod-hero::before {
+                animation: none;
+            }
+            
+            .apod-image-container,
+            .form-button,
+            .apod-button {
+                transition: none;
+            }
+            
+            .loading::after {
+                animation: none;
+            }
+        }
+        
+        /* High Contrast Mode */
+        @media (prefers-contrast: high) {
+            .apod-hero {
+                background: #000;
+            }
+            
+            .main-section {
+                background: rgba(0, 0, 0, 0.9);
+                border: 2px solid #73d239;
+            }
+            
+            .form-input {
+                background: #000;
+                border: 2px solid #73d239;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .apod-hero,
+            #header,
+            .apod-buttons,
+            .translate-widget {
+                display: none;
+            }
+            
+            .apod-image {
+                max-height: none;
+            }
+            
+            body {
+                background: #fff;
+                color: #000;
             }
         }
     </style>
@@ -242,61 +539,61 @@
 
 <body class="is-preload">
     <div id="page-wrapper">
-        <!-- Header -->
-        <header id="header">
-            <h1 id="logo"><a href="../index.html">KOTARO AI</a></h1>
-            <nav id="nav">
-                <ul>
-                    <li><a href="#">Tải Xuống</a></li>
-                    <li><a href="#">Wikiperdia AI</a></li>
-                    <li>
-                        <a href="#">Thư Viện</a>
-                        <ul>
-                            <li><a href="#">Nghiên Cứu</a></li>
-                            <li><a href="#">Ebook</a></li>
-                            <li>
-                                <a href="#">Ôn Luyện Học Sinh Giỏi</a>
-                                <ul>
-                                    <li><a href="#">Vật Lý</a></li>
-                                    <li><a href="#">Hóa Học</a></li>
-                                    <li><a href="#">Sinh Học</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Trợ Lý Sen</a></li>
-                    <li><a href="#">Máy Tính Khoa Học</a></li>
-                    <li><a href="#">Thiên Văn AI</a></li>
-                    <li>
-                        <a href="#">Vũ Trụ</a>
-                        <ul>
-                            <li><a href="he-mat-troi.html">Hệ Mặt Trời</a></li>
-                            <li><a href="tieu-hanh-tinh.html">Tiểu Hành Tinh</a></li>
-                            <li><a href="trai-dat.html">Trái Đất</a></li>
-                            <li><a href="hanh-tinh-khac.html">Hành Tinh Ngoài Hệ Mặt Trời</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Tạo Câu Hỏi</a></li>
-                    <li><a href="#">Trợ Lý Công Thức</a></li>
-                    <li>
-                        <a href="#">Khoa Học Tự Nhiên</a>
-                        <ul>
-                            <li><a href="#">Vật Lý</a></li>
-                            <li><a href="#">Hóa Học</a></li>
-                            <li><a href="#">Sinh Học</a></li>
-                            <li>
-                                <a href="#">Mô Phỏng Thí Nghiệm 2D</a>
-                                <ul>
-                                    <li><a href="#">Thí Nghiệm Vật Lý</a></li>
-                                    <li><a href="#">Thí Nghiệm Hóa Học</a></li>
-                                    <li><a href="#">Thí Nghiệm Sinh Học</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+			<!-- Header -->
+            <header id="header">
+                <h1 id="logo"><a href="index.html">KOTARO AI</a></h1>
+                <nav id="nav">
+                    <ul>
+                        <li><a href="#">Tải Xuống</a></li>
+                        <li>
+                            <a href="#">Thư Viện</a>
+                            <ul>
+                                <li><a href="#">Nghiên Cứu</a></li>
+                                <li><a href="#">Ebook</a></li>
+                                <li>
+                                    <a href="#">Ôn Luyện Học Sinh Giỏi</a>
+                                    <ul>
+                                        <li><a href="#">Vật Lý</a></li>
+                                        <li><a href="#">Hóa Học</a></li>
+                                        <li><a href="#">Sinh Học</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="chatbot-main.html">Trợ Lý Sen</a></li>
+                        <li>
+                            <a href="#">Thiên Văn Học</a>
+                            <ul>
+                                <li><a href="trang-chu/he-mat-troi.html">Hệ Mặt Trời</a></li>
+                                <li><a href="trang-chu/tieu-hanh-tinh.html">Tiểu Hành Tinh</a></li>
+                                <li><a href="trang-chu/trai-dat.html">Trái Đất</a></li>
+                                <li><a href="trang-chu/hanh-tinh-khac.html">Hành Tinh Ngoài Hệ Mặt Trời</a></li>
+                                <li><a href="trang-chu/image-nasa-interface.html">Ảnh Thiên Văn Thời Gian Thực</a></li>
+                                <li><a href="trang-chu/robot-sao-hoa.html">Robot Thám Hiểm Sao Hỏa</a>
+                            </ul>
+                        </li>
+                        <li><a href="#">Máy Tính Khoa Học</a></li>
+                        <li><a href="#">Local AI</a></li>
+                        <li><a href="#">Tạo Câu Hỏi</a></li>
+                        <li>
+                            <a href="#">Khoa Học Tự Nhiên</a>
+                            <ul>
+                                <li><a href="#">Vật Lý</a></li>
+                                <li><a href="#">Hóa Học</a></li>
+                                <li><a href="#">Sinh Học</a></li>
+                                <li>
+                                    <a href="#">Mô Phỏng Thí Nghiệm 2D</a>
+                                    <ul>
+                                        <li><a href="#">Thí Nghiệm Vật Lý</a></li>
+                                        <li><a href="#">Thí Nghiệm Hóa Học</a></li>
+                                        <li><a href="#">Thí Nghiệm Sinh Học</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
 
         <!-- Hero Section -->
         <section class="apod-hero">
@@ -309,59 +606,69 @@
 
         <!-- Main Content -->
         <div class="apod-container">
-            <div class="container">
-                <div class="row aln-center">
-                    <div class="col-12 col-8-medium col-6">
-                        <section class="box special">
-                            <header class="major">
-                                <h2>Ảnh Thiên Văn Trong Ngày với NASA</h2>
-                                <p>Tự động dịch sang tiếng Việt cho học sinh</p>
-                            </header>
-                            
-                            <!-- Search Form -->
-                            <form class="apod-form" onsubmit="return false;">
-                                <div class="row gtr-uniform aln-center">
-                                    <div class="col-8 col-12-small">
-                                        <input type="text" id="dateText" placeholder="Nhập ngày (dd/mm/yyyy)" maxlength="10" required />
-                                    </div>
-                                    <div class="col-4 col-12-small">
-                                        <input type="submit" id="fetchBtn" value="Xem ảnh" class="button primary fit icon solid fa-search" />
-                                    </div>
-                                </div>
-                            </form>
-
-                            <!-- APOD Content -->
-                            <div id="apod">
-                                <h3 id="title" class="loading">Đang tải...</h3>
-                                
-                                <div class="apod-image-container">
-                                    <img id="image" class="apod-image" alt="Astronomy Picture" style="display: none;" />
-                                </div>
-                                
-                                <div id="apod-buttons" class="apod-buttons" style="display: none;">
-                                    <button id="downloadBtn" class="button small icon solid fa-download">Tải ảnh</button>
-                                    <button id="viewDetailBtn" class="button small icon solid fa-expand">Xem chi tiết</button>
-                                </div>
-                                
-                                <div class="apod-description">
-                                    <h2>Mô Tả Về Hình Ảnh</h2>
-                                    <p id="explanation" class="description"></p>
-                                </div>
-                            </div>
-                        </section>
+            <div class="content-wrapper">
+                <section class="main-section">
+                    <div class="section-header">
+                        <h2>Ảnh Thiên Văn Trong Ngày với NASA</h2>
+                        <p>Tự động dịch sang tiếng Việt cho học sinh và người yêu thiên văn</p>
                     </div>
-                </div>
+                    
+                    <!-- Search Form -->
+                    <form class="apod-form" onsubmit="return false;">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="datePicker">Chọn ngày</label>
+                                <input type="date" id="datePicker" class="form-input" required />
+                            </div>
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button type="submit" id="fetchBtn" class="form-button">
+                                     Xem ảnh
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button type="button" id="todayBtn" class="form-button secondary">
+                                     Hôm nay
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!-- APOD Content -->
+                    <div class="apod-content">
+                        <h3 id="title" class="apod-title loading">Đang tải...</h3>
+                        
+                        <div class="apod-image-container" id="imageContainer" style="display: none;">
+                            <img id="image" class="apod-image" alt="Astronomy Picture" />
+                        </div>
+                        
+                        <div id="apod-buttons" class="apod-buttons" style="display: none;">
+                            <button id="downloadBtn" class="apod-button primary">
+                                 Tải ảnh
+                            </button>
+                            <button id="viewDetailBtn" class="apod-button">
+                                 Xem chi tiết
+                            </button>
+                        </div>
+                        
+                        <div class="apod-description">
+                            <h3>Mô Tả Về Hình Ảnh</h3>
+                            <p id="explanation">Đang tải thông tin...</p>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
 
         <!-- Modal for detailed image view -->
         <div id="imageModal" class="modal">
             <span id="closeModal" class="close-modal">&times;</span>
-            <img id="modalImg" src="" />
+            <img id="modalImg" src="" alt="Detailed view" />
         </div>
 
         <!-- Google Translate widget -->
-        <div id="google_translate_element" style="position: fixed; bottom: 10px; right: 10px; z-index: 3000;"></div>
+        <div id="google_translate_element" class="translate-widget"></div>
     </div>
 
     <!-- Scripts -->
@@ -375,22 +682,26 @@
     <script src="../assets/js/main.js"></script>
     
     <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'vi', 
-                includedLanguages: 'en,vi,fr,ja,zh-CN', 
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-        }
+        // Ẩn widget Google Translate và chỉ dịch sang tiếng Việt
+        document.addEventListener("DOMContentLoaded", function() {
+            var translateWidget = document.getElementById('google_translate_element');
+            if (translateWidget) {
+                translateWidget.style.display = 'none';
+            }
+        });
+        // Không khởi tạo Google Translate, chỉ sử dụng dịch tiếng Việt qua Lingva hoặc API khác nếu cần
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
     <script>
+        // Votre JavaScript existant reste inchangé
         const apiKey = "QjukGaZAtCoeMB9z9M2h36VG0gEauYpVOXLEPGyP";
-        const dateText = document.getElementById("dateText");
+        const datePicker = document.getElementById("datePicker");
         const fetchBtn = document.getElementById("fetchBtn");
+        const todayBtn = document.getElementById("todayBtn");
         const titleEl = document.getElementById("title");
         const imageEl = document.getElementById("image");
+        const imageContainer = document.getElementById("imageContainer");
         const explanationEl = document.getElementById("explanation");
         const downloadBtn = document.getElementById("downloadBtn");
         const viewDetailBtn = document.getElementById("viewDetailBtn");
@@ -400,7 +711,7 @@
         const closeModal = document.getElementById("closeModal");
         let currentImageUrl = "";
 
-        // Hàm dịch sử dụng Lingva Translate API, chỉ dịch từ tiếng Anh sang tiếng Việt
+        // Hàm dịch sử dụng Lingva Translate API
         async function lingvaTranslate(text) {
             try {
                 const res = await fetch('https://lingva.ml/api/v1/en/vi/' + encodeURIComponent(text));
@@ -411,17 +722,48 @@
             }
         }
 
+        // Hàm lấy ngày hiện tại
+        function getTodayDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Hàm thiết lập ngày hiện tại
+        function setTodayDate() {
+            datePicker.value = getTodayDate();
+        }
+
+        // Hàm kiểm tra ngày hợp lệ
+        function isValidDate(dateString) {
+            const selectedDate = new Date(dateString);
+            const today = new Date();
+            today.setHours(23, 59, 59, 999);
+            return selectedDate <= today;
+        }
+
         async function fetchAPOD() {
             let date = '';
-            if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateText.value)) {
-                const [d, m, y] = dateText.value.split('/');
-                date = `${y}-${m}-${d}`;
+            
+            if (datePicker.value) {
+                if (!isValidDate(datePicker.value)) {
+                    titleEl.textContent = "Ngày không hợp lệ!";
+                    titleEl.className = "apod-title error-state";
+                    imageContainer.style.display = "none";
+                    explanationEl.textContent = "Vui lòng chọn ngày không lớn hơn ngày hiện tại.";
+                    apodButtons.style.display = "none";
+                    return;
+                }
+                date = datePicker.value;
             }
+            
             const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}${date ? `&date=${date}` : ""}`;
             
             titleEl.textContent = "Đang tải...";
-            titleEl.className = "loading";
-            imageEl.style.display = "none";
+            titleEl.className = "apod-title loading";
+            imageContainer.style.display = "none";
             apodButtons.style.display = "none";
             
             try {
@@ -429,31 +771,30 @@
                 const data = await res.json();
                 
                 if (data.media_type === "image") {
-                    // Dịch các trường trả về bằng Lingva Translate API (chỉ tiếng Việt)
                     const [viTitle, viExplanation] = await Promise.all([
                         lingvaTranslate(data.title),
                         lingvaTranslate(data.explanation)
                     ]);
                     
                     titleEl.textContent = viTitle;
-                    titleEl.className = "";
+                    titleEl.className = "apod-title";
                     imageEl.src = data.url;
-                    imageEl.style.display = "block";
+                    imageContainer.style.display = "block";
                     explanationEl.textContent = viExplanation;
                     apodButtons.style.display = "flex";
                     currentImageUrl = data.url;
                 } else {
-                    titleEl.textContent = "Hiện Không Có Ảnh Thiên Văn Trong Khoản Thời Gian Này";
-                    titleEl.className = "error-state";
-                    imageEl.style.display = "none";
-                    explanationEl.textContent = "Hôm Nay Không Có Hình Ảnh";
+                    titleEl.textContent = "Hiện Không Có Ảnh Thiên Văn";
+                    titleEl.className = "apod-title error-state";
+                    imageContainer.style.display = "none";
+                    explanationEl.textContent = "Hôm nay không có hình ảnh, có thể là video.";
                     apodButtons.style.display = "none";
                     currentImageUrl = "";
                 }
             } catch (err) {
                 titleEl.textContent = "Lỗi tải dữ liệu!";
-                titleEl.className = "error-state";
-                imageEl.style.display = "none";
+                titleEl.className = "apod-title error-state";
+                imageContainer.style.display = "none";
                 explanationEl.textContent = "Vui lòng kiểm tra lại kết nối mạng.";
                 apodButtons.style.display = "none";
                 currentImageUrl = "";
@@ -462,10 +803,17 @@
 
         // Event listeners
         fetchBtn.onclick = fetchAPOD;
-        dateText.addEventListener('keyup', function(e) { 
-            if (e.key === 'Enter') fetchAPOD(); 
-        });
+        todayBtn.onclick = function() {
+            setTodayDate();
+            fetchAPOD();
+        };
+        
+        // Tự động fetch khi thay đổi ngày
+        datePicker.addEventListener('change', fetchAPOD);
 
+        // Thiết lập ngày hiện tại khi trang load
+        setTodayDate();
+        
         // Tải dữ liệu ngay khi vào trang
         fetchAPOD();
 
@@ -511,6 +859,8 @@
                 modalImg.src = '';
             }
         };
+
+
     </script>
 </body>
 </html>
