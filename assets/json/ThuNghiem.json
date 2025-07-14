@@ -1,0 +1,122 @@
+[
+  {
+    "id": "buoyancy-basics",
+    "title": "Sự nổi - Cơ bản",
+    "description": "Khám phá lực đẩy Archimedes thông qua các vật thể chìm nổi. Thay đổi khối lượng, thể tích và mật độ để quan sát hiện tượng nổi.",
+    "category": "Vật lý",
+    "image": "buoyancy-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/buoyancy-basics/latest/buoyancy-basics_vi.html",
+    "difficulty": "Cơ bản",
+    "duration": "15-20 phút"
+  },
+  {
+    "id": "circuit-construction",
+    "title": "Mạch điện đơn giản",
+    "description": "Thực hành tạo và kiểm tra mạch điện kín với pin, dây dẫn và bóng đèn. Khám phá các thành phần cơ bản của mạch điện.",
+    "category": "Vật lý",
+    "image": "circuit-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/circuit-construction-kit-dc/latest/circuit-construction-kit-dc_vi.html",
+    "difficulty": "Cơ bản",
+    "duration": "20-25 phút"
+  },
+  {
+    "id": "acid-base-solutions",
+    "title": "Dung dịch Axit-Bazơ",
+    "description": "Khám phá tính chất của axit và bazơ. Thay đổi nồng độ và quan sát sự thay đổi pH, màu sắc của chất chỉ thị.",
+    "category": "Hóa học",
+    "image": "acid-base-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/acid-base-solutions/latest/acid-base-solutions_vi.html",
+    "difficulty": "Trung bình",
+    "duration": "25-30 phút"
+  },
+  {
+    "id": "build-an-atom",
+    "title": "Xây dựng nguyên tử",
+    "description": "Tạo nguyên tử bằng cách thêm proton, neutron và electron. Quan sát cách thay đổi số hạt ảnh hưởng đến nguyên tố.",
+    "category": "Hóa học",
+    "image": "atom-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_vi.html",
+    "difficulty": "Cơ bản",
+    "duration": "15-20 phút"
+  },
+  {
+    "id": "natural-selection",
+    "title": "Chọn lọc tự nhiên",
+    "description": "Khám phá quá trình chọn lọc tự nhiên thông qua mô phỏng quần thể thỏ. Thay đổi môi trường và quan sát sự tiến hóa.",
+    "category": "Sinh học",
+    "image": "natural-selection-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_vi.html",
+    "difficulty": "Trung bình",
+    "duration": "30-35 phút"
+  },
+  {
+    "id": "energy-skate-park",
+    "title": "Công viên trượt ván năng lượng",
+    "description": "Khám phá bảo toàn năng lượng thông qua trò chơi trượt ván. Quan sát sự chuyển đổi giữa động năng và thế năng.",
+    "category": "Vật lý",
+    "image": "skate-park-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/energy-skate-park-basics/latest/energy-skate-park-basics_vi.html",
+    "difficulty": "Cơ bản",
+    "duration": "20-25 phút"
+  },
+  {
+    "id": "molecule-shapes",
+    "title": "Hình dạng phân tử",
+    "description": "Khám phá hình dạng phân tử thông qua mô hình 3D. Thêm electron và quan sát sự thay đổi hình dạng phân tử.",
+    "category": "Hóa học",
+    "image": "molecule-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/molecule-shapes/latest/molecule-shapes_vi.html",
+    "difficulty": "Trung bình",
+    "duration": "25-30 phút"
+  },
+  {
+    "id": "gene-expression",
+    "title": "Biểu hiện gen",
+    "description": "Khám phá quá trình biểu hiện gen từ DNA đến protein. Điều chỉnh các yếu tố ảnh hưởng đến quá trình phiên mã.",
+    "category": "Sinh học",
+    "image": "gene-expression-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/gene-expression-essentials/latest/gene-expression-essentials_vi.html",
+    "difficulty": "Nâng cao",
+    "duration": "35-40 phút"
+  },
+  {
+    "id": "wave-on-a-string",
+    "title": "Sóng trên sợi dây",
+    "description": "Khám phá tính chất của sóng cơ học. Thay đổi tần số, biên độ và quan sát sự lan truyền sóng.",
+    "category": "Vật lý",
+    "image": "wave-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/wave-on-a-string/latest/wave-on-a-string_vi.html",
+    "difficulty": "Cơ bản",
+    "duration": "15-20 phút"
+  },
+  {
+    "id": "reactants-products",
+    "title": "Phản ứng hóa học",
+    "description": "Khám phá cân bằng hóa học thông qua mô phỏng phản ứng. Quan sát sự thay đổi nồng độ chất phản ứng và sản phẩm.",
+    "category": "Hóa học",
+    "image": "reaction-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/reactants-products-and-leftovers/latest/reactants-products-and-leftovers_vi.html",
+    "difficulty": "Trung bình",
+    "duration": "25-30 phút"
+  },
+  {
+    "id": "ecosystem",
+    "title": "Hệ sinh thái",
+    "description": "Khám phá mối quan hệ trong hệ sinh thái. Thêm hoặc loại bỏ các loài và quan sát tác động đến toàn bộ hệ thống.",
+    "category": "Sinh học",
+    "image": "ecosystem-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/ecosystem/latest/ecosystem_vi.html",
+    "difficulty": "Trung bình",
+    "duration": "30-35 phút"
+  },
+  {
+    "id": "gravity-force-lab",
+    "title": "Phòng thí nghiệm lực hấp dẫn",
+    "description": "Khám phá định luật vạn vật hấp dẫn của Newton. Thay đổi khối lượng và khoảng cách giữa các vật thể.",
+    "category": "Vật lý",
+    "image": "gravity-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab_vi.html",
+    "difficulty": "Cơ bản",
+    "duration": "20-25 phút"
+  }
+]

@@ -3447,7 +3447,7 @@ input, select, textarea {
 /* Banner */
 
 	#banner {
-		background-attachment: fixed;
+		background-attachment: scroll;
 		background-color: #272833;
 		background-image: url("../../images/banner.jpg");
 		background-position: center center;
@@ -3456,7 +3456,7 @@ input, select, textarea {
 		min-height: 100vh;
 		position: relative;
 		text-align: center;
-		z-index: 21;
+		z-index: 1;
 	}
 
 		#banner:before {

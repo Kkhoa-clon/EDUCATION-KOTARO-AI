@@ -1,0 +1,910 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Admin Dashboard - Hệ Thống Quản Lý Sách Điện Tử</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<link rel="stylesheet" href="../../assets/css/ebook.css" />
+		<link rel="icon" href="../../hinh-anh/logo-Photoroom.png" type="image/x-jpg">
+		<style>
+			/* Admin Dashboard Styles */
+			.admin-container {
+				max-width: 1600px;
+				margin: 0 auto;
+				padding: 1em;
+			}
+
+			.admin-header {
+				background: linear-gradient(135deg, #73d239, #8ee63e);
+				color: #1c1d26;
+				padding: 2em;
+				border-radius: 16px;
+				margin-bottom: 2em;
+				text-align: center;
+			}
+
+			.admin-header h1 {
+				font-size: 2.5em;
+				margin-bottom: 0.5em;
+				font-weight: 300;
+			}
+
+			.admin-header p {
+				font-size: 1.1em;
+				opacity: 0.9;
+			}
+
+			.admin-nav {
+				display: flex;
+				gap: 1em;
+				margin-bottom: 2em;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+
+			.admin-nav-btn {
+				padding: 0.8em 1.5em;
+				background: rgba(115, 210, 57, 0.1);
+				color: #73d239;
+				border: 1px solid rgba(115, 210, 57, 0.3);
+				border-radius: 8px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				font-size: 1em;
+			}
+
+			.admin-nav-btn:hover,
+			.admin-nav-btn.active {
+				background: #73d239;
+				color: #1c1d26;
+			}
+
+			.admin-section {
+				display: none;
+			}
+
+			.admin-section.active {
+				display: block;
+			}
+
+			.admin-section h3 {
+				color: #73d239;
+				margin-bottom: 1.5em;
+				font-weight: 300;
+				font-size: 1.8em;
+			}
+
+			.dashboard-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+				gap: 1.5em;
+				margin-bottom: 2em;
+			}
+
+			.dashboard-card {
+				background: rgba(39, 40, 51, 0.8);
+				border-radius: 12px;
+				padding: 2em;
+				text-align: center;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				transition: all 0.3s ease;
+			}
+
+			.dashboard-card:hover {
+				transform: translateY(-5px);
+				border-color: rgba(115, 210, 57, 0.3);
+			}
+
+			.dashboard-card-icon {
+				font-size: 2.5em;
+				color: #73d239;
+				margin-bottom: 0.5em;
+			}
+
+			.dashboard-card-number {
+				font-size: 2em;
+				font-weight: 300;
+				color: #fff;
+				margin-bottom: 0.3em;
+			}
+
+			.dashboard-card-label {
+				color: rgba(255, 255, 255, 0.7);
+				font-size: 0.9em;
+			}
+
+			.admin-table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-top: 1em;
+			}
+
+			.admin-table th,
+			.admin-table td {
+				padding: 1em;
+				text-align: left;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			}
+
+			.admin-table th {
+				background: rgba(115, 210, 57, 0.1);
+				color: #73d239;
+				font-weight: 500;
+			}
+
+			.admin-table tr:hover {
+				background: rgba(115, 210, 57, 0.05);
+			}
+
+			.admin-actions {
+				display: flex;
+				gap: 0.5em;
+			}
+
+			.admin-btn {
+				padding: 0.4em 0.8em;
+				border: 1px solid rgba(115, 210, 57, 0.3);
+				background: transparent;
+				color: #73d239;
+				border-radius: 4px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				font-size: 0.8em;
+			}
+
+			.admin-btn:hover {
+				background: #73d239;
+				color: #1c1d26;
+			}
+
+			.admin-btn.delete {
+				border-color: rgba(228, 76, 101, 0.3);
+				color: #e44c65;
+			}
+
+			.admin-btn.delete:hover {
+				background: #e44c65;
+				color: #fff;
+			}
+
+			.admin-form {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 1.5em;
+			}
+
+			.admin-form-group {
+				display: flex;
+				flex-direction: column;
+			}
+
+			.admin-form-group.full-width {
+				grid-column: 1 / -1;
+			}
+
+			.admin-label {
+				color: #73d239;
+				margin-bottom: 0.5em;
+				font-weight: 500;
+			}
+
+			.admin-input {
+				padding: 0.8em 1em;
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				border-radius: 8px;
+				background: rgba(255, 255, 255, 0.05);
+				color: #fff;
+				font-size: 1em;
+			}
+
+			.admin-input:focus {
+				outline: none;
+				border-color: #73d239;
+				box-shadow: 0 0 0 2px rgba(115, 210, 57, 0.2);
+			}
+
+			.admin-textarea {
+				min-height: 120px;
+				resize: vertical;
+			}
+
+			.admin-submit {
+				grid-column: 1 / -1;
+				padding: 1em 2em;
+				background: #73d239;
+				color: #1c1d26;
+				border: none;
+				border-radius: 8px;
+				font-weight: 500;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				font-size: 1.1em;
+			}
+
+			.admin-submit:hover {
+				background: #8ee63e;
+				transform: translateY(-1px);
+			}
+
+			/* Login Modal */
+			.login-modal {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.9);
+				z-index: 10000;
+				backdrop-filter: blur(5px);
+			}
+
+			.login-content {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background: #1c1d26;
+				padding: 3em;
+				border-radius: 16px;
+				border: 1px solid rgba(115, 210, 57, 0.3);
+				text-align: center;
+				min-width: 400px;
+			}
+
+			.login-content h2 {
+				color: #73d239;
+				margin-bottom: 1em;
+				font-weight: 300;
+			}
+
+			.login-input {
+				width: 100%;
+				padding: 1em;
+				margin-bottom: 1em;
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				border-radius: 8px;
+				background: rgba(255, 255, 255, 0.05);
+				color: #fff;
+				font-size: 1em;
+			}
+
+			.login-input:focus {
+				outline: none;
+				border-color: #73d239;
+			}
+
+			.login-btn {
+				width: 100%;
+				padding: 1em;
+				background: #73d239;
+				color: #1c1d26;
+				border: none;
+				border-radius: 8px;
+				font-weight: 500;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				font-size: 1.1em;
+			}
+
+			.login-btn:hover {
+				background: #8ee63e;
+			}
+
+			.login-error {
+				color: #e44c65;
+				margin-top: 1em;
+				display: none;
+			}
+
+			@media (max-width: 768px) {
+				.admin-nav {
+					flex-direction: column;
+				}
+				
+				.dashboard-grid {
+					grid-template-columns: 1fr;
+				}
+				
+				.admin-form {
+					grid-template-columns: 1fr;
+				}
+				
+				.admin-table {
+					font-size: 0.9em;
+				}
+				
+				.admin-table th,
+				.admin-table td {
+					padding: 0.5em;
+				}
+
+				.login-content {
+					min-width: 300px;
+					margin: 1em;
+				}
+			}
+		</style>
+	</head>
+	<body class="is-preload landing">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<header id="header">
+				<h1 id="logo"><a href="../../index.html">KOTARO AI</a></h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="../thu-vien/ebook.html">← Quay lại Ebook</a></li>
+						<li><a href="#dashboard">Dashboard</a></li>
+					</ul>
+				</nav>
+			</header>
+			<br><br>
+			<!-- Login Modal -->
+			<div id="login-modal" class="login-modal">
+				<div class="login-content">
+					<h2>🔐 Đăng nhập Admin</h2>
+					<p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 2em;">
+						Vui lòng nhập mật khẩu để truy cập hệ thống quản lý
+					</p>
+					<input type="password" id="password-input" class="login-input" placeholder="Nhập mật khẩu..." autocomplete="off">
+					<button id="login-btn" class="login-btn">Đăng nhập</button>
+					<div id="login-error" class="login-error">
+						Mật khẩu không đúng. Vui lòng thử lại.
+					</div>
+				</div>
+			</div>
+
+			<!-- Admin Content -->
+			<div class="admin-container" id="admin-content" style="display: none;">
+				<div class="admin-header">
+					<h1>Admin Dashboard</h1>
+					<p>Quản lý hệ thống sách điện tử Kotaro AI</p>
+				</div>
+
+				<!-- Admin Navigation -->
+				<div class="admin-nav">
+					<button class="admin-nav-btn active" onclick="showSection('dashboard')">
+						📊 Dashboard
+					</button>
+					<button class="admin-nav-btn" onclick="showSection('books')">
+						📚 Quản lý sách
+					</button>
+					<button class="admin-nav-btn" onclick="showSection('upload')">
+						📤 Thêm sách
+					</button>
+					<button class="admin-nav-btn" onclick="showSection('settings')">
+						⚙️ Cài đặt
+					</button>
+				</div>
+
+				<!-- Dashboard Section -->
+				<div id="dashboard" class="admin-section active">
+					<h3>📊 Tổng quan hệ thống</h3>
+					
+					<div class="dashboard-grid">
+						<div class="dashboard-card">
+							<div class="dashboard-card-icon">📚</div>
+							<div class="dashboard-card-number" id="total-books">0</div>
+							<div class="dashboard-card-label">Tổng số sách</div>
+						</div>
+						<div class="dashboard-card">
+							<div class="dashboard-card-icon">⬇️</div>
+							<div class="dashboard-card-number" id="total-downloads">0</div>
+							<div class="dashboard-card-label">Lượt tải</div>
+						</div>
+						<div class="dashboard-card">
+							<div class="dashboard-card-icon">⭐</div>
+							<div class="dashboard-card-number" id="avg-rating">0.0</div>
+							<div class="dashboard-card-label">Đánh giá TB</div>
+						</div>
+						<div class="dashboard-card">
+							<div class="dashboard-card-icon">📊</div>
+							<div class="dashboard-card-number" id="total-categories">0</div>
+							<div class="dashboard-card-label">Thể loại</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Books Management Section -->
+				<div id="books" class="admin-section">
+					<h3>📚 Quản lý sách</h3>
+					
+					<div style="margin-bottom: 1em;">
+						<input type="text" id="book-search" class="admin-input" placeholder="🔍 Tìm kiếm sách..." style="width: 100%; max-width: 400px;">
+					</div>
+
+					<table class="admin-table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Tên sách</th>
+								<th>Tác giả</th>
+								<th>Thể loại</th>
+								<th>Lượt tải</th>
+								<th>Đánh giá</th>
+								<th>Thao tác</th>
+							</tr>
+						</thead>
+						<tbody id="books-table-body">
+							<!-- Books will be loaded here -->
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Upload Section -->
+				<div id="upload" class="admin-section">
+					<h3>📤 Thêm sách mới</h3>
+					
+					<form id="upload-form" class="admin-form">
+						<div class="admin-form-group">
+							<label class="admin-label">Tên sách *</label>
+							<input type="text" name="title" class="admin-input" required>
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">Tác giả *</label>
+							<input type="text" name="author" class="admin-input" required>
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">URL sách</label>
+							<input type="url" name="url" class="admin-input" placeholder="https://example.com/book.pdf">
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">Nguồn</label>
+							<input type="text" name="source" class="admin-input" placeholder="Project Gutenberg">
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">Định dạng</label>
+							<select name="type" class="admin-input">
+								<option value="PDF">PDF</option>
+								<option value="EPUB">EPUB</option>
+								<option value="DOCX">DOCX</option>
+								<option value="TXT">TXT</option>
+							</select>
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">Thể loại</label>
+							<select name="category" class="admin-input">
+								<option value="Tiểu thuyết">Tiểu thuyết</option>
+								<option value="Giáo trình">Giáo trình</option>
+								<option value="Khoa học">Khoa học</option>
+								<option value="Công nghệ">Công nghệ</option>
+								<option value="Khác">Khác</option>
+							</select>
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">Ngôn ngữ</label>
+							<select name="language" class="admin-input">
+								<option value="Tiếng Việt">Tiếng Việt</option>
+								<option value="English">English</option>
+								<option value="中文">中文</option>
+							</select>
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">Năm xuất bản</label>
+							<input type="number" name="year" class="admin-input" min="1800" max="2030">
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">Nhà xuất bản</label>
+							<input type="text" name="publisher" class="admin-input">
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">Số trang</label>
+							<input type="number" name="pages" class="admin-input" min="1">
+						</div>
+						
+						<div class="admin-form-group full-width">
+							<label class="admin-label">Mô tả</label>
+							<textarea name="description" class="admin-input admin-textarea" placeholder="Mô tả ngắn gọn về nội dung sách..."></textarea>
+						</div>
+						
+						<div class="admin-form-group full-width">
+							<label class="admin-label">Tags (phân cách bằng dấu phẩy)</label>
+							<input type="text" name="tags" class="admin-input" placeholder="văn học, tiểu thuyết, lịch sử">
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">URL ảnh bìa</label>
+							<input type="url" name="cover" class="admin-input" placeholder="https://example.com/cover.jpg">
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">Đánh giá</label>
+							<input type="number" name="rating" class="admin-input" min="0" max="5" step="0.1" placeholder="4.5">
+						</div>
+						
+						<div class="admin-form-group">
+							<label class="admin-label">Lượt tải</label>
+							<input type="number" name="downloads" class="admin-input" min="0" placeholder="1000">
+						</div>
+						
+						<button type="submit" class="admin-submit">
+							📤 Thêm sách
+						</button>
+					</form>
+				</div>
+
+				<!-- Settings Section -->
+				<div id="settings" class="admin-section">
+					<h3>⚙️ Cài đặt hệ thống</h3>
+					
+					<div class="dashboard-grid">
+						<div class="dashboard-card">
+							<div class="dashboard-card-icon">💾</div>
+							<div class="dashboard-card-number">Lưu dữ liệu</div>
+							<div class="dashboard-card-label">
+								<button class="admin-btn" onclick="adminDashboard.saveToFile()">
+									💾 Lưu vào ebooks.json
+								</button>
+							</div>
+						</div>
+						<div class="dashboard-card">
+							<div class="dashboard-card-icon">🔄</div>
+							<div class="dashboard-card-number">Tải lại dữ liệu</div>
+							<div class="dashboard-card-label">
+								<button class="admin-btn" onclick="adminDashboard.reloadData()">
+									🔄 Tải lại từ ebooks.json
+								</button>
+							</div>
+						</div>
+						<div class="dashboard-card">
+							<div class="dashboard-card-icon">📊</div>
+							<div class="dashboard-card-number">Xuất dữ liệu</div>
+							<div class="dashboard-card-label">
+								<button class="admin-btn" onclick="adminDashboard.exportData()">
+									📊 Xuất JSON
+								</button>
+							</div>
+						</div>
+						<div class="dashboard-card">
+							<div class="dashboard-card-icon">🚪</div>
+							<div class="dashboard-card-number">Đăng xuất</div>
+							<div class="dashboard-card-label">
+								<button class="admin-btn" onclick="adminDashboard.logout()">
+									🚪 Đăng xuất
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="../../assets/js/jquery.min.js"></script>
+		<script src="../../assets/js/breakpoints.min.js"></script>
+		<script src="../../assets/js/browser.min.js"></script>
+		<script src="../../assets/js/util.js"></script>
+		<script src="../../assets/js/main.js"></script>
+		<script src="../../assets/js/ebook.js"></script>
+		<script>
+			// Admin Dashboard Manager
+			class AdminDashboard extends EbookManager {
+				constructor() {
+					super();
+					this.isAdmin = true;
+					this.currentSection = 'dashboard';
+					this.isAuthenticated = false;
+					this.initAdmin();
+				}
+
+				async initAdmin() {
+					this.showLoginModal();
+				}
+
+				showLoginModal() {
+					const modal = document.getElementById('login-modal');
+					const passwordInput = document.getElementById('password-input');
+					const loginBtn = document.getElementById('login-btn');
+					const loginError = document.getElementById('login-error');
+
+					modal.style.display = 'block';
+					passwordInput.focus();
+
+					// Login button click
+					loginBtn.onclick = () => {
+						this.authenticate(passwordInput.value);
+					};
+
+					// Enter key press
+					passwordInput.onkeypress = (e) => {
+						if (e.key === 'Enter') {
+							this.authenticate(passwordInput.value);
+						}
+					};
+				}
+
+				authenticate(password) {
+					const loginError = document.getElementById('login-error');
+					
+					if (password === '211212') {
+						this.isAuthenticated = true;
+						document.getElementById('login-modal').style.display = 'none';
+						document.getElementById('admin-content').style.display = 'block';
+						this.loadBooks();
+						this.setupAdminEventListeners();
+						this.updateDashboardStats();
+						this.renderBooksTable();
+						this.showSuccess('Đăng nhập thành công!');
+					} else {
+						loginError.style.display = 'block';
+						document.getElementById('password-input').value = '';
+						document.getElementById('password-input').focus();
+					}
+				}
+
+				logout() {
+					if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
+						this.isAuthenticated = false;
+						document.getElementById('admin-content').style.display = 'none';
+						this.showLoginModal();
+					}
+				}
+
+				setupAdminEventListeners() {
+					// Book search
+					const bookSearch = document.getElementById('book-search');
+					if (bookSearch) {
+						bookSearch.addEventListener('input', (e) => {
+							this.filterBooksForTable(e.target.value);
+						});
+					}
+
+					// Upload form
+					const uploadForm = document.getElementById('upload-form');
+					if (uploadForm) {
+						uploadForm.addEventListener('submit', (e) => {
+							e.preventDefault();
+							this.handleAdminUpload();
+						});
+					}
+				}
+
+				updateDashboardStats() {
+					// Update main stats
+					const totalBooks = document.getElementById('total-books');
+					const totalDownloads = document.getElementById('total-downloads');
+					const avgRating = document.getElementById('avg-rating');
+					const totalCategories = document.getElementById('total-categories');
+
+					if (totalBooks) totalBooks.textContent = this.books.length;
+					if (totalDownloads) {
+						const downloads = this.books.reduce((sum, book) => sum + (book.downloads || 0), 0);
+						totalDownloads.textContent = downloads.toLocaleString();
+					}
+					if (avgRating) {
+						const rating = this.books.reduce((sum, book) => sum + (book.rating || 0), 0) / this.books.length;
+						avgRating.textContent = rating.toFixed(1);
+					}
+					if (totalCategories) {
+						const categories = new Set(this.books.map(book => book.category));
+						totalCategories.textContent = categories.size;
+					}
+				}
+
+				renderBooksTable() {
+					const tableBody = document.getElementById('books-table-body');
+					if (!tableBody) return;
+
+					tableBody.innerHTML = this.books.map(book => `
+						<tr>
+							<td>${book.id}</td>
+							<td>${book.title}</td>
+							<td>${book.author}</td>
+							<td>${book.category}</td>
+							<td>${(book.downloads || 0).toLocaleString()}</td>
+							<td>${book.rating || 0} ⭐</td>
+							<td>
+								<div class="admin-actions">
+									<button class="admin-btn" onclick="adminDashboard.editBook(${book.id})">
+										✏️ Sửa
+									</button>
+									<button class="admin-btn" onclick="adminDashboard.viewBook(${book.id})">
+										👁️ Xem
+									</button>
+									<button class="admin-btn delete" onclick="adminDashboard.deleteBook(${book.id})">
+										🗑️ Xóa
+									</button>
+								</div>
+							</td>
+						</tr>
+					`).join('');
+				}
+
+				filterBooksForTable(searchTerm) {
+					const filteredBooks = this.books.filter(book => {
+						const searchText = `${book.title} ${book.author} ${book.category}`.toLowerCase();
+						return searchText.includes(searchTerm.toLowerCase());
+					});
+
+					const tableBody = document.getElementById('books-table-body');
+					if (!tableBody) return;
+
+					tableBody.innerHTML = filteredBooks.map(book => `
+						<tr>
+							<td>${book.id}</td>
+							<td>${book.title}</td>
+							<td>${book.author}</td>
+							<td>${book.category}</td>
+							<td>${(book.downloads || 0).toLocaleString()}</td>
+							<td>${book.rating || 0} ⭐</td>
+							<td>
+								<div class="admin-actions">
+									<button class="admin-btn" onclick="adminDashboard.editBook(${book.id})">
+										✏️ Sửa
+									</button>
+									<button class="admin-btn" onclick="adminDashboard.viewBook(${book.id})">
+										👁️ Xem
+									</button>
+									<button class="admin-btn delete" onclick="adminDashboard.deleteBook(${book.id})">
+										🗑️ Xóa
+									</button>
+								</div>
+							</td>
+						</tr>
+					`).join('');
+				}
+
+				async handleAdminUpload() {
+					const formData = new FormData(document.getElementById('upload-form'));
+					const bookData = Object.fromEntries(formData.entries());
+
+					if (!bookData.title || !bookData.author) {
+						this.showError('Vui lòng điền đầy đủ thông tin bắt buộc.');
+						return;
+					}
+
+					const newBook = {
+						id: this.books.length + 1,
+						title: bookData.title,
+						author: bookData.author,
+						url: bookData.url || '#',
+						source: bookData.source || 'Admin Upload',
+						type: bookData.type || 'PDF',
+						category: bookData.category || 'Khác',
+						language: bookData.language || 'Tiếng Việt',
+						year: parseInt(bookData.year) || new Date().getFullYear(),
+						publisher: bookData.publisher || 'Unknown',
+						pages: parseInt(bookData.pages) || 0,
+						description: bookData.description || '',
+						tags: bookData.tags ? bookData.tags.split(',').map(tag => tag.trim()) : [],
+						cover: bookData.cover || `https://via.placeholder.com/300x400/73d239/ffffff?text=${encodeURIComponent(bookData.title)}`,
+						rating: parseFloat(bookData.rating) || 0,
+						downloads: parseInt(bookData.downloads) || 0
+					};
+
+					this.books.push(newBook);
+					this.updateDashboardStats();
+					this.renderBooksTable();
+					this.showSuccess(`Đã thêm sách: ${newBook.title}`);
+
+					document.getElementById('upload-form').reset();
+				}
+
+				editBook(bookId) {
+					const book = this.books.find(b => b.id == bookId);
+					if (!book) return;
+
+					// Populate form and switch to upload section
+					this.populateUploadForm(book);
+					showSection('upload');
+					this.showSuccess(`Đang chỉnh sửa: ${book.title}`);
+				}
+
+				viewBook(bookId) {
+					const book = this.books.find(b => b.id == bookId);
+					if (!book) return;
+
+					// Open reader
+					this.openReader(bookId);
+				}
+
+				deleteBook(bookId) {
+					const book = this.books.find(b => b.id == bookId);
+					if (!book) return;
+
+					if (confirm(`Bạn có chắc chắn muốn xóa sách "${book.title}"?`)) {
+						this.books = this.books.filter(b => b.id != bookId);
+						this.updateDashboardStats();
+						this.renderBooksTable();
+						this.showSuccess(`Đã xóa sách: ${book.title}`);
+					}
+				}
+
+				populateUploadForm(book) {
+					const form = document.getElementById('upload-form');
+					if (!form) return;
+
+					const fields = ['title', 'author', 'url', 'source', 'type', 'category', 'language', 'year', 'publisher', 'pages', 'description', 'rating', 'downloads'];
+					fields.forEach(field => {
+						const input = form.querySelector(`[name="${field}"]`);
+						if (input) {
+							input.value = book[field] || '';
+						}
+					});
+
+					// Handle tags
+					const tagsInput = form.querySelector('[name="tags"]');
+					if (tagsInput) {
+						tagsInput.value = book.tags ? book.tags.join(', ') : '';
+					}
+				}
+
+				saveToFile() {
+					// In a real application, this would save to the server
+					// For now, we'll create a downloadable JSON file
+					const dataStr = JSON.stringify(this.books, null, 2);
+					const dataBlob = new Blob([dataStr], {type: 'application/json'});
+					const url = URL.createObjectURL(dataBlob);
+					const link = document.createElement('a');
+					link.href = url;
+					link.download = 'ebooks.json';
+					document.body.appendChild(link);
+					link.click();
+					document.body.removeChild(link);
+					URL.revokeObjectURL(url);
+					
+					this.showSuccess('Đã xuất dữ liệu thành công! Vui lòng thay thế file ebooks.json hiện tại.');
+				}
+
+				async reloadData() {
+					try {
+						await this.loadBooks();
+						this.updateDashboardStats();
+						this.renderBooksTable();
+						this.showSuccess('Đã tải lại dữ liệu thành công!');
+					} catch (error) {
+						this.showError('Không thể tải lại dữ liệu.');
+					}
+				}
+
+				exportData() {
+					this.saveToFile();
+				}
+			}
+
+			// Global functions
+			let adminDashboard;
+
+			function showSection(sectionId) {
+				// Hide all sections
+				document.querySelectorAll('.admin-section').forEach(section => {
+					section.classList.remove('active');
+				});
+
+				// Remove active class from all nav buttons
+				document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+					btn.classList.remove('active');
+				});
+
+				// Show selected section
+				document.getElementById(sectionId).classList.add('active');
+
+				// Add active class to clicked button
+				event.target.classList.add('active');
+			}
+
+			// Initialize admin dashboard
+			document.addEventListener('DOMContentLoaded', () => {
+				adminDashboard = new AdminDashboard();
+			});
+
+			// Add Font Awesome
+			const fontAwesome = document.createElement('link');
+			fontAwesome.rel = 'stylesheet';
+			fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
+			document.head.appendChild(fontAwesome);
+		</script>
+	</body>
+</html> 
