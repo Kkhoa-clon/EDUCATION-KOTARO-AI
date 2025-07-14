@@ -41,26 +41,32 @@
                 </div>
                 <div class="sidebar-subtitle">Trợ lý học tập thông minh</div>
             </div>
-
-            <!-- New Chat Button -->
-            <button class="new-chat-btn" onclick="startNewChat()">
-                <span class="material-symbols-rounded">add</span>
-                Cuộc trò chuyện mới
-            </button>
-
-            <!-- Chat History -->
-            <div class="chat-history">
-                <div class="chat-history-item active">
-                    <div class="chat-history-title">Hỏi về Hóa học</div>
-                    <div class="chat-history-preview">Giải thích về phản ứng oxi hóa khử...</div>
+            <br>
+            <!-- Chủ đề minh họa Chatbot có thể hỗ trợ -->
+            <div class="chat-history chatbot-demo-topics">
+                <div class="chat-history-item">
+                    <div class="chat-history-title">Giải thích kiến thức Toán học</div>
+                    <div class="chat-history-preview">Ví dụ: Định lý Pythagoras, giải phương trình...</div>
                 </div>
                 <div class="chat-history-item">
-                    <div class="chat-history-title">Bài tập Vật lý</div>
-                    <div class="chat-history-preview">Tính toán chuyển động thẳng đều...</div>
+                    <div class="chat-history-title">Tư vấn học tập</div>
+                    <div class="chat-history-preview">Lập kế hoạch ôn thi, mẹo học hiệu quả...</div>
                 </div>
                 <div class="chat-history-item">
-                    <div class="chat-history-title">Sinh học lớp 10</div>
-                    <div class="chat-history-preview">Cấu trúc tế bào và chức năng...</div>
+                    <div class="chat-history-title">Tạo sơ đồ tư duy</div>
+                    <div class="chat-history-preview">Tóm tắt bài học bằng sơ đồ, mindmap...</div>
+                </div>
+                <div class="chat-history-item">
+                    <div class="chat-history-title">Phân tích hình ảnh</div>
+                    <div class="chat-history-preview">Nhận diện nội dung, mô tả ảnh, trích xuất thông tin...</div>
+                </div>
+                <div class="chat-history-item">
+                    <div class="chat-history-title">Giải thích code lập trình</div>
+                    <div class="chat-history-preview">Phân tích, sửa lỗi, tối ưu code Python, C++, ...</div>
+                </div>
+                <div class="chat-history-item">
+                    <div class="chat-history-title">Hỗ trợ tiếng Anh</div>
+                    <div class="chat-history-preview">Dịch thuật, luyện nói, giải thích ngữ pháp...</div>
                 </div>
             </div>
 
@@ -188,32 +194,33 @@
     <script src="assets/js/chatbot.js"></script>
     <script src="assets/js/chatbot-sd.js"></script>
     <script src="assets/js/chatbot-ui.js"></script>
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="assets/js/logic_email.js"></script>
     <script>
-        // Sidebar functionality
-        function startNewChat() {
-            // Clear current chat
-            const chatBody = document.querySelector('.chat-body');
-            chatBody.innerHTML = `
-                <div class="message bot-message">
-                    <img class="bot-avatar" src="https://i.pinimg.com/736x/1b/9d/20/1b9d203c25c64fac1117c96309808415.jpg" alt="Bot Avatar">
-                    <div class="message-text">
-                        <div class="welcome-message">
-                            <h3>Cuộc trò chuyện mới! 🚀</h3>
-                            <p style="margin-bottom: 16px; font-size: 1.1rem;">Bạn muốn hỏi gì hôm nay?</p>
-                            <div class="feature-list">
-                                <p style="margin: 0; line-height: 1.6;">
-                                    Mình sẵn sàng giúp bạn với các câu hỏi về <strong style="color: #73d239;">Khoa Học Tự Nhiên</strong>!
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+        // // Sidebar functionality
+        // function startNewChat() {
+        //     // Clear current chat
+        //     const chatBody = document.querySelector('.chat-body');
+        //     chatBody.innerHTML = `
+        //         <div class="message bot-message">
+        //             <img class="bot-avatar" src="https://i.pinimg.com/736x/1b/9d/20/1b9d203c25c64fac1117c96309808415.jpg" alt="Bot Avatar">
+        //             <div class="message-text">
+        //                 <div class="welcome-message">
+        //                     <h3>Cuộc trò chuyện mới! 🚀</h3>
+        //                     <p style="margin-bottom: 16px; font-size: 1.1rem;">Bạn muốn hỏi gì hôm nay?</p>
+        //                     <div class="feature-list">
+        //                         <p style="margin: 0; line-height: 1.6;">
+        //                             Mình sẵn sàng giúp bạn với các câu hỏi về <strong style="color: #73d239;">Khoa Học Tự Nhiên</strong>!
+        //                         </p>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     `;
             
-            // Update active chat in sidebar
-            updateActiveChat('Cuộc trò chuyện mới');
-        }
+        //     // Update active chat in sidebar
+        //     updateActiveChat('Cuộc trò chuyện mới');
+        // }
 
         function updateActiveChat(title) {
             // Remove active class from all items
@@ -280,7 +287,6 @@
                         <p>• Kích thước: Responsive</p>
                         
                         <h4>Tính năng</h4>
-                        <p>• Emoji picker</p>
                         <p>• File upload</p>
                         <p>• Sơ đồ khối</p>
                         <p>• Markdown support</p>
