@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="assets/css/chatbot.css" />
     <link rel="stylesheet" href="assets/css/chatbot-sd.css" />
 </head>
+    <!-- Lớp phủ Spinner -->
+    <div class="spinner-overlay d-none" id="loadingSpinner">
+        <div class="spinner-container">
+            <img src="../hinh-anh/loading.gif" alt="Đang tải...">
+        </div>
+    </div>
+    <link href="../assets/css/robot-sao-hoa.css" rel="stylesheet">
 <body>
     <!-- Animated Background Elements -->
     <div class="banner-bg-elements">
@@ -45,7 +52,19 @@
             <!-- Chủ đề minh họa Chatbot có thể hỗ trợ -->
             <div class="chat-history chatbot-demo-topics">
                 <div class="chat-history-item">
-                    <div class="chat-history-title">Giải thích kiến thức Toán học</div>
+                    <div class="chat-history-title">Giải phương trình Hóa Học</div>
+                    <div class="chat-history-preview">Ví dụ: H2 + O2 = H2O</div>
+                </div>
+                <div class="chat-history-item">
+                    <div class="chat-history-title">Lý giải hiện tượng Vật Lý</div>
+                    <div class="chat-history-preview">Ví dụ: Lực hấp dẫn, định luật Ohm, ...</div>
+                </div>
+                <div class="chat-history-item">
+                    <div class="chat-history-title">Nghiên cứu Sinh Học</div>
+                    <div class="chat-history-preview">Ví dụ: Các bài tập sinh học, giải thích các hiện tượng sinh học...</div>
+                </div>
+                <div class="chat-history-item">
+                    <div class="chat-history-title">Kiến thức Toán học</div>
                     <div class="chat-history-preview">Ví dụ: Định lý Pythagoras, giải phương trình...</div>
                 </div>
                 <div class="chat-history-item">
@@ -63,10 +82,6 @@
                 <div class="chat-history-item">
                     <div class="chat-history-title">Giải thích code lập trình</div>
                     <div class="chat-history-preview">Phân tích, sửa lỗi, tối ưu code Python, C++, ...</div>
-                </div>
-                <div class="chat-history-item">
-                    <div class="chat-history-title">Hỗ trợ tiếng Anh</div>
-                    <div class="chat-history-preview">Dịch thuật, luyện nói, giải thích ngữ pháp...</div>
                 </div>
             </div>
 
@@ -194,8 +209,6 @@
     <script src="assets/js/chatbot.js"></script>
     <script src="assets/js/chatbot-sd.js"></script>
     <script src="assets/js/chatbot-ui.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="assets/js/logic_email.js"></script>
     <script>
         // // Sidebar functionality
         // function startNewChat() {

@@ -61,7 +61,7 @@ class SoDoGenerator {
     async generateSoDo(userInput = null) {
         // Nếu không có userInput, lấy từ message-input (cho tính năng cũ)
         if (!userInput) {
-            const messageInput = document.querySelector('.message-input');
+        const messageInput = document.querySelector('.message-input');
             userInput = messageInput ? messageInput.value.trim() : '';
         }
 
@@ -387,8 +387,8 @@ TRẢ LỜI:`;
                 currentContainer.innerHTML = svg;
                 
                 // Chỉ thiết lập zoom nếu được yêu cầu và container tồn tại
-                if (enableZoom) {
-                    this.setupZoomFunctionality();
+            if (enableZoom) {
+                this.setupZoomFunctionality();
                 }
             }
         } catch (error) {
@@ -396,10 +396,10 @@ TRẢ LỜI:`;
             const container = document.getElementById(containerId);
             if (container) {
                 container.innerHTML = `
-                    <div class="so-do-error">
-                        Lỗi khi render sơ đồ: ${error.message}
-                    </div>
-                `;
+                <div class="so-do-error">
+                    Lỗi khi render sơ đồ: ${error.message}
+                </div>
+            `;
             }
         }
     }
@@ -423,14 +423,14 @@ TRẢ LỜI:`;
         
         if (viewDetailBtn) {
             viewDetailBtn.addEventListener('click', () => {
-                this.showDetailModal(mermaidCode);
-            });
+            this.showDetailModal(mermaidCode);
+        });
         }
-        
+
         if (downloadBtn) {
             downloadBtn.addEventListener('click', () => {
-                this.downloadDiagram(mermaidCode);
-            });
+            this.downloadDiagram(mermaidCode);
+        });
         }
     }
 
@@ -473,14 +473,14 @@ TRẢ LỜI:`;
         
         if (modalClose) {
             modalClose.addEventListener('click', () => {
-                document.body.removeChild(modal);
-            });
+            document.body.removeChild(modal);
+        });
         }
 
         if (modalDownload) {
             modalDownload.addEventListener('click', () => {
-                this.downloadDiagram(mermaidCode);
-            });
+            this.downloadDiagram(mermaidCode);
+        });
         }
 
         modal.addEventListener('click', (e) => {
@@ -616,12 +616,12 @@ TRẢ LỜI:`;
     showError(message) {
         const resultContainer = document.querySelector('.so-do-result');
         if (resultContainer) {
-            resultContainer.style.display = 'block';
-            resultContainer.innerHTML = `
-                <div class="so-do-error">
-                    <strong>❌ Lỗi:</strong> ${message}
-                </div>
-            `;
+        resultContainer.style.display = 'block';
+        resultContainer.innerHTML = `
+            <div class="so-do-error">
+                <strong>❌ Lỗi:</strong> ${message}
+            </div>
+        `;
         } else {
             // console.error('Error:', message);
         }
@@ -630,17 +630,17 @@ TRẢ LỜI:`;
     showSuccess(message) {
         const resultContainer = document.querySelector('.so-do-result');
         if (resultContainer) {
-            const successDiv = document.createElement('div');
-            successDiv.className = 'so-do-success';
-            successDiv.innerHTML = `<strong>✅ Thành công:</strong> ${message}`;
-            
-            resultContainer.insertBefore(successDiv, resultContainer.firstChild);
-            
-            setTimeout(() => {
-                if (successDiv.parentNode) {
-                    successDiv.parentNode.removeChild(successDiv);
-                }
-            }, 3000);
+        const successDiv = document.createElement('div');
+        successDiv.className = 'so-do-success';
+        successDiv.innerHTML = `<strong>✅ Thành công:</strong> ${message}`;
+        
+        resultContainer.insertBefore(successDiv, resultContainer.firstChild);
+        
+        setTimeout(() => {
+            if (successDiv.parentNode) {
+                successDiv.parentNode.removeChild(successDiv);
+            }
+        }, 3000);
         }
         // else {
         //     console.log('Success:', message);
