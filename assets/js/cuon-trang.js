@@ -34,24 +34,5 @@
     window.addEventListener('load', adjustIframeHeight);
     window.addEventListener('resize', adjustIframeHeight);
     
-    // Smooth scroll for anchor links
-    window.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-        // Gọi lại hiệu ứng header khi load trang không ở đầu
-        const header = document.getElementById('header');
-        if (header) {
-            if (window.scrollY > 50) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
-        }
-    });
-    
     // Add loading timeout fallback
     setTimeout(hideLoading, 10000); // Hide loading after 10 seconds even if iframe doesn't load

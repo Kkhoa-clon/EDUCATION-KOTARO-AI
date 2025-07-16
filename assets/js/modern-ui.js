@@ -412,15 +412,28 @@
         }, 25000);
     }
 
-    // === SMOOTH SCROLLING ===
+    // === SMOOTH SCROLLING (Improved for smoothness and responsiveness) ===
     function setupSmoothScrolling() {
         $('a[href^="#"]').on('click', function(e) {
-            e.preventDefault();
-            const target = $($(this).attr('href'));
+            const href = $(this).attr('href');
+            // Ignore if href is just "#" or empty
+            if (!href || href === '#') return;
+            const target = $(href);
             if (target.length) {
-                $('html, body').animate({
-                    scrollTop: target.offset().top - 70
-                }, 1000, 'easeInOutCubic');
+                e.preventDefault();
+                const targetOffset = target.offset().top - 0;
+                // Use native scroll if supported for better smoothness
+                if ('scrollBehavior' in document.documentElement.style) {
+                    window.scrollTo({
+                        top: targetOffset,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    // Fallback for older browsers
+                    $('html, body').stop().animate({
+                        scrollTop: targetOffset
+                    }, 500); // Faster and less delay
+                }
             }
         });
     }
