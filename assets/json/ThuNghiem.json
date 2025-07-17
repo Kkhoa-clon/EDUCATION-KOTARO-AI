@@ -20,6 +20,16 @@
     "duration": "20-25 phút"
   },
   {
+    "id": "natural-selection",
+    "title": "Chọn lọc tự nhiên",
+    "description": "Mô phỏng quá trình chọn lọc tự nhiên trong quần thể, nghiên cứu sự tiến hóa và các yếu tố môi trường.",
+    "category": "Sinh học",
+    "image": "natural-selection-thumbnail.jpg",
+    "url": "https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_vi.html",
+    "difficulty": "Trung bình",
+    "duration": "20-25 phút"
+  },
+  {
     "id": "acid-base-solutions",
     "title": "Dung dịch axit-bazơ",
     "description": "Tìm hiểu về tính axit và bazơ của dung dịch thông qua các thí nghiệm với pH, độ dẫn điện và các chỉ số hóa học.",
@@ -128,16 +138,6 @@
     "url": "https://phet.colorado.edu/sims/html/calculus-grapher/latest/calculus-grapher_vi.html",
     "difficulty": "Nâng cao",
     "duration": "25-30 phút"
-  },
-  {
-    "id": "natural-selection",
-    "title": "Chọn lọc tự nhiên",
-    "description": "Mô phỏng quá trình chọn lọc tự nhiên trong quần thể, nghiên cứu sự tiến hóa và các yếu tố môi trường.",
-    "category": "Sinh học",
-    "image": "natural-selection-thumbnail.jpg",
-    "url": "https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_vi.html",
-    "difficulty": "Trung bình",
-    "duration": "20-25 phút"
   },
   {
     "id": "gene-expression-essentials",
