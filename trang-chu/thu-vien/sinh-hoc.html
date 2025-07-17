@@ -236,7 +236,124 @@
 			</div>
 
 		</div>
-
+		<!-- Security Alert Overlay Modern (Palette Strict) -->
+		<style>
+			.security-alert-overlay {
+			  position: fixed;
+			  top: 0; left: 0; right: 0; bottom: 0;
+			  z-index: 99999;
+			  background: rgba(28,29,38,0.92); /* --primary-dark */
+			  display: flex;
+			  align-items: center;
+			  justify-content: center;
+			  animation: fadeInOverlay 0.5s cubic-bezier(0.23,1,0.32,1);
+			}
+			@keyframes fadeInOverlay {
+			  from { opacity: 0; }
+			  to { opacity: 1; }
+			}
+			.security-alert-box {
+			  background: linear-gradient(135deg, #1c1d26 0%, #2a2b36 100%); /* --primary-dark to --secondary-dark */
+			  color: #73d239; /* --accent-green */
+			  border-radius: 22px;
+			  box-shadow: 0 10px 40px rgba(115,210,57,0.10), 0 2px 8px rgba(0,0,0,0.10);
+			  padding: 2.5rem 2.5rem 2rem 2.5rem;
+			  min-width: 340px;
+			  max-width: 95vw;
+			  font-family: 'Roboto', Helvetica, sans-serif;
+			  font-size: 1.18rem;
+			  text-align: center;
+			  position: relative;
+			  border: 2px solid #73d239; /* --accent-green */
+			  animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1);
+			}
+			@keyframes fadeInUp {
+			  from { opacity: 0; transform: translateY(40px); }
+			  to { opacity: 1; transform: translateY(0); }
+			}
+			.security-alert-box .alert-icon {
+			  font-size: 2.5rem;
+			  color: #73d239; /* --accent-green */
+			  margin-bottom: 0.5rem;
+			  display: block;
+			  animation: pulse 1.5s infinite;
+			}
+			@keyframes pulse {
+			  0%, 100% { transform: scale(1); }
+			  50% { transform: scale(1.08); }
+			}
+			.security-alert-box .alert-title {
+			  font-size: 1.3rem;
+			  font-weight: 700;
+			  margin-bottom: 0.5rem;
+			  color: #8ee63e; /* --accent-green-hover */
+			  letter-spacing: 0.5px;
+			}
+			.security-alert-box .alert-desc {
+			  font-size: 1.08rem;
+			  margin-bottom: 1.2rem;
+			  color: #ffffff; /* --text-primary */
+			}
+			.security-alert-box .alert-link {
+			  color: #059669; /* --accent-blue */
+			  text-decoration: underline;
+			  font-weight: 600;
+			  transition: color 0.2s;
+			}
+			.security-alert-box .alert-link:hover {
+			  color: #73d239;
+			}
+			.security-alert-box .alert-continue {
+			  display: inline-block;
+			  margin-top: 1.2rem;
+			  padding: 1rem 2.5rem;
+			  background: linear-gradient(135deg, #73d239, #059669);
+			  color: #fff;
+			  font-size: 1.15rem;
+			  font-weight: 700;
+			  border: none;
+			  border-radius: 50px;
+			  box-shadow: 0 6px 24px rgba(115,210,57,0.18);
+			  cursor: pointer;
+			  letter-spacing: 1px;
+			  transition: background 0.2s, transform 0.2s;
+			  outline: none;
+			}
+			.security-alert-box .alert-continue:hover, .security-alert-box .alert-continue:focus {
+			  background: linear-gradient(135deg, #8ee63e, #10b981); /* --accent-green-hover, --accent-teal */
+			  transform: translateY(-2px) scale(1.04);
+			}
+			@media (max-width: 600px) {
+			  .security-alert-box { padding: 1.2rem 0.5rem 1rem 0.5rem; font-size: 1rem; }
+			}
+			</style>
+			<div class="security-alert-overlay" id="security-alert-overlay">
+			  <div class="security-alert-box glass">
+				<span class="alert-icon"><i class="fas fa-exclamation-triangle"></i></span>
+				<div class="alert-title">Thông báo bảo mật</div>
+				<div class="alert-desc">
+				  Do quyền bảo mật tài liệu, chúng tôi sẽ <b>không tải lên dữ liệu sách</b>.<br>
+				  Bạn không thể trải nghiệm tính năng này tại phiên bản Website của chúng tôi.<br>
+				  Nếu muốn lưu trữ tài liệu, vui lòng sử dụng phiên bản mã nguồn mở tại
+				  <a class="alert-link" href="https://github.com/Kkhoa-clon/EDUCATION-KOTARO-AI" target="_blank">EDUKATION KOTARO AI</a><br><br>Đỗ Nguyễn Đăng Khoa.
+				</div>
+				<button class="alert-continue" onclick="closeSecurityAlert()" title="Tiếp tục">Tiếp tục</button>
+			  </div>
+			</div>
+			<script>
+			function closeSecurityAlert() {
+			  const overlay = document.getElementById('security-alert-overlay');
+			  if (overlay) {
+				overlay.style.transition = 'opacity 0.4s';
+				overlay.style.opacity = 0;
+				setTimeout(() => overlay.remove(), 400);
+			  }
+			}
+			window.addEventListener('DOMContentLoaded', function() {
+			  // setTimeout(closeSecurityAlert, 3000); // Removed automatic close
+			});
+			</script>
+			<!-- End Security Alert Overlay Modern (Palette Strict) -->
 		<!-- Scripts -->
 		<script src="../../assets/js/jquery.min.js"></script>
 		<script src="../../assets/js/jquery.scrolly.min.js"></script>
