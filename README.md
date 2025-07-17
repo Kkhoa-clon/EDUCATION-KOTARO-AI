@@ -5,7 +5,10 @@
 **EDUCATION-KOTARO-AI** là nền tảng giáo dục số tích hợp trí tuệ nhân tạo, cung cấp hệ sinh thái học tập hiện đại, cá nhân hóa và trực quan cho học sinh, giáo viên và cộng đồng yêu khoa học. Dự án nổi bật với giao diện 3D, dark theme, hiệu ứng động, kho tài liệu số, thí nghiệm ảo, quiz, trợ lý AI và nhiều tiện ích giáo dục tiên tiến.
 
 ---
+### Deploy
+https://kkhoa-clon.github.io/EDUCATION-KOTARO-AI
 
+https://education-kotaro-ai.netlify.app
 ## Tính năng nổi bật
 
 ### 1. Trợ lý AI (Chatbot KOTARO AI)
