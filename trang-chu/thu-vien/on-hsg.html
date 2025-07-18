@@ -325,18 +325,19 @@
 			}
 			</style>
 			<div class="security-alert-overlay" id="security-alert-overlay">
-			  <div class="security-alert-box glass">
-				<span class="alert-icon"><i class="fas fa-exclamation-triangle"></i></span>
-				<div class="alert-title">Thông báo bảo mật</div>
-				<div class="alert-desc">
-				  Do quyền bảo mật tài liệu, chúng tôi sẽ <b>không tải lên dữ liệu sách</b>.<br>
-				  Bạn không thể trải nghiệm tính năng này tại phiên bản Website của chúng tôi.<br>
-				  Nếu muốn lưu trữ tài liệu, vui lòng sử dụng phiên bản mã nguồn mở tại
-				  <a class="alert-link" href="https://github.com/Kkhoa-clon/EDUCATION-KOTARO-AI" target="_blank">EDUKATION KOTARO AI</a><br><br>Đỗ Nguyễn Đăng Khoa.
+				<div class="security-alert-box glass">
+				  <span class="alert-icon"><i class="fas fa-exclamation-triangle"></i></span>
+				  <div class="alert-title">Thông Báo</div>
+				  <div class="alert-desc">
+					Dữ liệu của các trang tài liệu sẽ<b> không được tải lên</b>.<br>
+					do vấn đề về Dung Lượng Lớn để giảm thiểu dung lượng cho thư mục dự án<br>
+					do toàn bộ dữ liệu là rất lớn chúng tôi không thể lưu trữ và gửi đi trong 
+					một thư mục<br> vì thế hãy sử dụng sản phẩm như một mã nguồn mở tại
+					<a class="alert-link" href="https://github.com/Kkhoa-clon/EDUCATION-KOTARO-AI" target="_blank">EDUKATION KOTARO AI</a><br><br>Đỗ Nguyễn Đăng Khoa.
+				  </div>
+				  <button class="alert-continue" onclick="closeSecurityAlert()" title="Tiếp tục">Tiếp tục</button>
 				</div>
-				<button class="alert-continue" onclick="closeSecurityAlert()" title="Tiếp tục">Tiếp tục</button>
 			  </div>
-			</div>
 			<script>
 			function closeSecurityAlert() {
 			  const overlay = document.getElementById('security-alert-overlay');

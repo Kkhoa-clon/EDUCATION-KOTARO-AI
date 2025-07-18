@@ -187,9 +187,9 @@ class LabExperiments {
     filterExperiments() {
         this.filteredExperiments = this.experiments.filter(exp => {
             const matchesSearch = this.searchTerm === '' || 
-                                exp.title.toLowerCase().includes(this.searchTerm) ||
-                                exp.description.toLowerCase().includes(this.searchTerm) ||
-                                exp.category.toLowerCase().includes(this.searchTerm);
+                (exp.title || '').toLowerCase().includes(this.searchTerm) ||
+                (exp.description || '').toLowerCase().includes(this.searchTerm) ||
+                (exp.category || '').toLowerCase().includes(this.searchTerm);
             
             const matchesCategory = this.currentCategory === 'all' || 
                                   exp.category === this.currentCategory;
