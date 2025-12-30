@@ -1,0 +1,8 @@
+/* CSS của icons */
+.floating-card .card-icon img {
+    width: 16px;   /* nhỏ hơn nữa */
+    height: 16px;  /* giữ tỷ lệ vuông */
+    object-fit: contain; /* đảm bảo không bị méo */
+    display: block;
+    margin: 0 auto; /* căn giữa trong khung */
+}
